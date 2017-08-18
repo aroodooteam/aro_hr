@@ -8,7 +8,7 @@ class hr_employee_formation_module(osv.osv):
     """Gestion des modules de formation chez ARO"""
     _name = 'hr.employee.formation.module'
     _columns = {
-    'code':fields.char('Code', size=16),
+        'code':fields.char('Code', size=16),
         'name':fields.char('Libellé', size=64),
 
         # 'cout':fields.float('Coût'), ##champs en stand by
