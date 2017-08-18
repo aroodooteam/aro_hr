@@ -14,5 +14,7 @@ import hr_employee_formation_module
 import hr_employee_formation
 import hr_employee_qualification
 import hr_employee_medical_ticket
-
 import hr_employee_children
+import hr_holidays_status_type
+import hr_replacement
+import hr_holidays

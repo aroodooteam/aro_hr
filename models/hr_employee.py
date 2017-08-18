@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+
+from openerp import models
 from openerp.osv import fields, osv
 import datetime
 
@@ -93,3 +95,10 @@ class hr_employee(osv.osv):
             'formation_ids':fields.one2many('hr.employee.formation', 'employee_id', 'Formation'),  # add by Hari
         }
 hr_employee()
+
+
+class hr_employee(models.Model):
+
+    _inherit = 'hr.employee'
+
+    manager_user_id = fields.Many2one('res.users', related='parent_id.user_id')
