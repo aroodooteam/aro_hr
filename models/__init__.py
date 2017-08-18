@@ -18,3 +18,15 @@ import hr_employee_children
 import hr_holidays_status_type
 import hr_replacement
 import hr_holidays
+
+import aptitude_type
+import hr_applicant_aptitude
+import hr_employee_aptitude
+import hr_job_aptitude
+import hr_applicant_formation
+import hr_job_formation
+import institute
+import hr_job_qualification
+import hr_applicant_qualification
+import hr_task_categ
+import hr_employee_task
