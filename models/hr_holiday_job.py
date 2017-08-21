@@ -33,10 +33,3 @@ class hr_holiday_job(models.Model):
     weekend = fields.Boolean('Ouvrable')
     days = fields.Float('Jours a attribuer')
     job_id = fields.Many2one('hr.job', 'Poste')
-
-
-class hr_job(models.Model):
-    _inherit = 'hr.job'
-
-    hr_holiday_job_ids = fields.One2many('hr.holiday.job', 'job_id', 'Conges')
-    replacement = fields.Boolean('Remplacement Obligatoire')

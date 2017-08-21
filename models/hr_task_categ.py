@@ -8,6 +8,6 @@ class hr_task_categ(osv.osv):
     _name = 'hr.task.categ'
 
     _columns = {
-        'name':fields.char('Catégorie')
+        'name':fields.char(u'Catégorie')
     }
 hr_task_categ()

@@ -127,3 +127,12 @@ class hr_job(models.Model):
                 evaluation.button_plan_in_progress()
         else:
             raise exceptions.Warning("Plan d'evaluation existe pour ce poste")
+
+# Fusionner ces 2 classes hr_job dans une seule classe
+
+
+class hr_job(models.Model):
+    _inherit = 'hr.job'
+
+    hr_holiday_job_ids = fields.One2many('hr.holiday.job', 'job_id', 'Conges')
+    replacement = fields.Boolean('Remplacement Obligatoire')
