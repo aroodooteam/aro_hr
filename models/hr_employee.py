@@ -99,8 +99,8 @@ class hr_employee(osv.osv):
 hr_employee()
 
 
-class hr_employee(models.Model):
-
-    _inherit = 'hr.employee'
-
-    manager_user_id = fields.Many2one('res.users', related='parent_id.user_id')
+# class hr_employee(models.Model):
+# 
+#     _inherit = 'hr.employee'
+# 
+#     manager_user_id = fields.Many2one('res.users', related='parent_id.user_id')
