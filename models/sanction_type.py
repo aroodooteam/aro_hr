@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
 
-class sanction_type(osv.osv):
-        _name = 'sanction.type'
-        _columns = {
-            'name':fields.char('Description', size=64),
-            'detail':fields.text('Text sur document'),
-            'interview':fields.boolean('Entretiens?'),
-            'notification':fields.boolean('Notification?'),
-            'days_work':fields.boolean('A defalquer sur jours travailles?'),
+from openerp import api, exceptions, fields, models, _
+class sanction_type(models.Model):
 
-        }
-sanction_type()
+    _name = 'sanction.type'
+    _description = u'Sanction '
+
+    name = fields.Char(string='Description',size=64)
+    detail = fields.Text(string='Text sur document')
+    interview = fields.Boolean(string='Entretiens?',default=False,)
+    notification = fields.Boolean(string='Notification?')
+    days_work = fields.Boolean(string='A defalquer sur jours travailles?')
