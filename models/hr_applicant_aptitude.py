@@ -10,3 +10,4 @@ class HrApplicantAptitude(models.Model):
     name = fields.Many2one(string='Aptitude', comodel_name='aptitude.type')
     applicant_id = fields.Many2one(string='Candidat', comodel_name='hr.applicant')
     taux = field_name = fields.Integer(string= u'Taux employé %')
+    hr_applicant_formation()

@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models, _
 
-
-class hr_applicant_formation(osv.osv):
-    """Gestion des formations des employes chez ARO"""
+class hr_applicant_formation(models.models):
     _name = 'hr.applicant.formation'
     _description = 'Formations'
-    _columns = {
-        'ref':fields.integer('Reference'),
-        'applicant_id':fields.many2one('hr.applicant', 'Candidat'),
-        'date':fields.date('Date'),
-        'name':fields.many2one('hr.employee.formation.module', 'Formation'),
-        'commentaire':fields.text('Commentaire'),
-    }
-hr_applicant_formation()
+
+    ref = fields.Integer(string='Reference')
+    applicant_id = fields.Many2one(string='Candidat',comodel_name='hr.applicant')
+    date = fields.Datetime(string='Date')
+    name = fields.Many2one(string='Formation',comodel_name='hr.employee.formation.module')
+    commentaire = fields.Text(string='Commentaire')
