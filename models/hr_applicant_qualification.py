@@ -2,6 +2,7 @@
 
 from openerp import api, exceptions, fields, models, _
 
+
 class hr_applicant_qualification(models.Model):
     """ gestion des qualifications  """
 

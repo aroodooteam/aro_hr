@@ -2,6 +2,8 @@
 
 
 from openerp import api, exceptions, fields, models, _
+
+
 class sanction_type(models.Model):
 
     _name = 'sanction.type'
