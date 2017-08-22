@@ -1,20 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models, _
 
+class hr_applicant_qualification(models.Model):
+    """ gestion des qualifications  """
 
-class hr_applicant_qualification(osv.osv):
-    """gestion des qualifications"""
     _name = 'hr.applicant.qualification'
-    _columns = {
-    'date': fields.date('Date'),
-    'name': fields.many2one('qual.type', 'Qualification'),
-    'applicant_id':fields.many2one('hr.applicant', 'Candidat'),
-    'branche_id':fields.many2one('hr.employee.branche', 'Branche'),  # #add by Hari
-    'specialite':fields.char('Specialite', size=16),  # #add by Hari
-    'annee':fields.integer('Annee'),  # #add by Hari
-    'lieu':fields.char('Lieu', size=32),  # #add by Hari
+    _description = 'Qualification'
 
-    }
-hr_applicant_qualification()
+    date = fields.Datetime(string='Date')
+    name = fields.Many2one(string='Qualification',comodel_name='qual.type')
+    applicant_id = fields.Many2one(string='Candidat',comodel_name='hr.applicant')
+    branche_id = fields.Many2one(string='Branche',comodel_name='hr.employee.branche')
+    specialite = fields.Char(string='Specialite',size=16)
+    annee = fields.Integer(string='Annee')
+    lieu = fields.Char(string='Lieu',size=32)
