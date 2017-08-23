@@ -31,15 +31,15 @@ class HrJob(models.Model):
     _inherit = 'hr.job'
 
 
-    qualification_ids:fields.One2many(string='hr.job.qualification', 'job_id', 'Qualification Requises'),
-    formation_ids:fields.One2many(string='hr.job.formation', 'job_id', 'Formations Requises'),
-    aptitude_ids:fields.One2many(string='hr.job.aptitude', 'job_id', 'Aptitudes Technique'),
+    qualification_ids:fields.One2many(comodel_name='hr.job.qualification', 'job_id', 'Qualification Requises'),
+    formation_ids:fields.One2many(comodel_name='hr.job.formation', 'job_id', 'Formations Requises'),
+    aptitude_ids:fields.One2many(comodel_name='hr.job.aptitude', 'job_id', 'Aptitudes Technique'),
     time_start:fields.Char(string='Heure Debut', size=5),
     time_stop:fields.Char(string='Heure Fin', size=5),
     internal_relation:fields.Text(string='Relation interne'),
     external_relation:fields.Text(string='Relation externe'),
-    task_ids:fields.One2many(string='hr.job.task', 'job_id', 'Taches'),
-    hr_holiday_job_ids = fields.One2many(string='hr.holiday.job', 'job_id', 'Conges')
+    task_ids:fields.One2many(comodel_name='hr.job.task', 'job_id', 'Taches'),
+    hr_holiday_job_ids = fields.One2many(comodel_name='hr.holiday.job', 'job_id', 'Conges')
     replacement = fields.Boolean(string='Remplacement Obligatoire')
 
 
