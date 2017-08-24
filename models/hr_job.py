@@ -31,19 +31,16 @@ class HrJob(models.Model):
     _inherit = 'hr.job'
 
 
-    qualification_ids:fields.One2many(comodel_name='hr.job.qualification', inverse_name='job_id', string='Qualification Requises'),
-    formation_ids:fields.One2many(comodel_name='hr.job.formation', inverse_name='job_id', string='Formations Requises'),
-    aptitude_ids:fields.One2many(comodel_name='hr.job.aptitude', inverse_name='job_id', string='Aptitudes Technique'),
-    time_start:fields.Char(string='Heure Debut', size=5),
-    time_stop:fields.Char(string='Heure Fin', size=5),
-    internal_relation:fields.Text(string='Relation interne'),
-    external_relation:fields.Text(string='Relation externe'),
-    task_ids:fields.One2many(comodel_name='hr.job.task', inverse_name='job_id', string='Taches'),
+    qualification_ids = fields.One2many(comodel_name='hr.job.qualification', inverse_name='job_id', string='Qualification Requises'),
+    formation_ids = fields.One2many(comodel_name='hr.job.formation', inverse_name='job_id', string='Formations Requises'),
+    aptitude_ids = fields.One2many(comodel_name='hr.job.aptitude', inverse_name='job_id', string='Aptitudes Technique'),
+    time_start = fields.Char(string='Heure Debut', size=5),
+    time_stop = fields.Char(string='Heure Fin', size=5),
+    internal_relation = fields.Text(string='Relation interne'),
+    external_relation = fields.Text(string='Relation externe'),
+    task_ids = fields.One2many(comodel_name='hr.job.task', inverse_name='job_id', string='Taches'),
     hr_holiday_job_ids = fields.One2many(comodel_name='hr.holiday.job', inverse_name='job_id', string='Conges')
     replacement = fields.Boolean(string='Remplacement Obligatoire')
-
-
-
 
     @api.multi
     def create_survey(self):
