@@ -1,14 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models, _
 
-
-class hr_employee_decoration_type(osv.osv):
+class HrEmployeeDecorationType(models.Model):
     """gestion des types de decoration existant chez ARO."""
+
     _name = 'hr.employee.decoration.type'
-    _columns = {
-        'code': fields.char('Code Decoration', size=16),
-        'name':fields.char('Titre Decoration', size=64),
-    }
-hr_employee_decoration_type()
+
+    code = fields.Char(string='Code Decoration',size=16)
+    name = fields.Char(string='Titre Decoration',size=16)
