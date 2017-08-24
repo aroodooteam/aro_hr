@@ -1,18 +1,36 @@
 # -*- coding: utf-8 -*-
+###############################################################################
+#    License, author and contributors information in:                         #
+#    __openerp__.py file at the root folder of this module.                   #
+###############################################################################
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import models, fields, api
+from openerp.tools.translate import _
+from logging import getLogger
 
 
-class hr_job_qualification(osv.osv):
+_logger = getLogger(__name__)
 
-    _name = "hr.job.qualification"
-    _description = "Qualifications Pour un poste"
 
-    _columns = {
-    'name': fields.many2one('qual.type', 'Qualification Requise'),
-    'branche_id':fields.many2one('hr.employee.branche', 'Branche'),  # #add by Hari
-    'specialite':fields.char('Specialite', size=64),  # #add by Hari
-    'job_id':fields.many2one('hr.job', 'Poste'),
-        }
-hr_job_qualification()
+
+
+class HrJobQualification(models.Model):
+    """ The summary line for a class docstring should fit on one line.
+
+    Fields:
+      name (Char): Human readable name which will identify each record.
+
+    """
+
+    _name = 'hr.job.qualification'
+    _description = u'Hr job qualification'
+
+    _rec_name = 'name'
+    _order = 'name ASC'
+
+    name = fields.Many2one(comodel_name='qual.type', string='Qualification Requise')
+    branche_id = fields.Many2one(comodel_name='hr.employee.branche', string='Branche')
+    specialite = fields.Char(string='Specialite', size=64)
+    job_id = fields.Many2one(comodel_name='hr.job', string='Poste')
+
+

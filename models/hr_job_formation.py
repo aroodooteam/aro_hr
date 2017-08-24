@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models, _
 
 
-class hr_job_formation(osv.osv):
-
-    _name = "hr.job.formation"
+class HrJobFormation(models.model):
+	_name = "hr.job.formation"
     _description = "Formation requis pour le poste"
 
-    _columns = {
-        'name':fields.many2one('hr.employee.formation.module', 'Formation'),
-        'job_id':fields.many2one('hr.job', 'Poste'),
-    }
-hr_job_formation()
+    name = fields.Many2one(comodel_name='hr.employee.formation.module', string='Formation')
+    job_id = fields.Many2one(comodel_name='hr.job', string='Poste')
+
