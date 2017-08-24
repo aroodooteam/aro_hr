@@ -28,9 +28,9 @@ class HrJobQualification(models.Model):
     _rec_name = 'name'
     _order = 'name ASC'
 
-    name = fields.Many2one(comodel_name='qual.type', 'Qualification Requise')
-    branche_id = fields.Many2one(comodel_name='hr.employee.branche', 'Branche')
+    name = fields.Many2one(comodel_name='qual.type', string='Qualification Requise')
+    branche_id = fields.Many2one(comodel_name='hr.employee.branche', string='Branche')
     specialite = fields.Char(string='Specialite', size=64)
-    job_id = fields.Many2one(comodel_name='hr.job', 'Poste')
+    job_id = fields.Many2one(comodel_name='hr.job', string='Poste')
 
 
