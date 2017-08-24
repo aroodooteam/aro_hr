@@ -27,7 +27,7 @@
 #from openerp.osv import fields, osv
 from openerp import api, exceptions, fields, models, _
 
-class HrEmployeeChildren(models.models):
+class HrEmployeeChildren(models.Model):
     """(NULL)"""
     _name = 'hr.employee.children'
 
