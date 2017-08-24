@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from openerp import api, exceptions, fields, models, _
 
-class ModelName(models.Model):
+class HrEmployeeDecoration(models.Model):
     """gestion des decorations de l'employé"""
 
     _name = 'hr.employee.decoration'
