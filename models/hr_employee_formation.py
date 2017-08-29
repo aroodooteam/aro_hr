@@ -1,24 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models, _
 
-
-class hr_employee_formation(osv.osv):
+class HrEmployeeFormation(models.Model):
     """Gestion des formations des employes chez ARO"""
+
     _name = 'hr.employee.formation'
-    _description = 'Formations'
-    _columns = {
-        'ref':fields.integer('Reference'),
-        'employee_id':fields.many2one('hr.employee', 'Employe'),
-        'date':fields.date('Date'),
-        'module_id':fields.many2one('hr.employee.formation.module', 'Module'),
-        'code_module':fields.char('Code Module', size=32),  # inutile pour le moment
-        'commentaire':fields.text('Commentaire'),
-        'name': fields.many2one('qual.type', 'Qualification'),
-        'branche_id':fields.many2one('hr.employee.branche', 'Niveau'),  # #added by Hari
-        'specialite':fields.char('Specialite', size=64),  # #added by Hari
-        'institute_id':fields.many2one('institute', 'Institut'),
-        'lieu':fields.char('Lieu', size=32),  # #added by Hari
-    }
-hr_employee_formation()
+    _description = u'Formations'
+
+    _rec_name = 'name'
+    _order = 'name ASC'
+    ref = fields.Integer(string='Reference')
+    employee_id = fields.Many2one(string='Employe',comodel_name='hr.employee')
+    date = fields.Date(string='Date')
+    module_id = fields.Many2one(string='Module',comodel_name='hr.employee.formation.module')
+    commentaire = fields.Text(string='Commentaire')
+    name = fields.Many2one(string='Qualification',comodel_name='qual.type')
+    branche_id = fields.Many2one(string='Niveau',comodel_name='hr.employee.branche')
+    specialite = fields.Char(string='Specialite',size=64)
+    institute_id = fields.Many2one(string='Institut',comodel_name='institute')
+    lieu = fields.Char(string='Lieu',size=64)

@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
+from openerp import api, exceptions, fields, models, _
 
-from openerp.osv import fields, osv
-import datetime
-
-
-class hr_employee_decoration(osv.osv):
+class HrEmployeeDecoration(models.Model):
     """gestion des decorations de l'employé"""
+
     _name = 'hr.employee.decoration'
-    _columns = {
-        # 'code': fields.char('Code Decoration', size=16),
-        'annee':fields.date('Date'),
-        'decoration_id':fields.many2one('hr.employee.decoration.type', 'Titre Decoration'),
-        'employee_id':fields.many2one('hr.employee', 'Salarié'),
-   }
-hr_employee_decoration()
+    _description = u'decorations de l\'employé %'
+
+    annee = fields.Date(string='Date')
+    decoration_id = fields.Many2one(string='Titre Decoration',comodel_name='hr.employee.decoration.type')
+    employee_id = fields.Many2one(string='Salarié',comodel_name='hr.employee')

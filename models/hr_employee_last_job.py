@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models, _
 
-
-class hr_employee_last_job(osv.osv):
+class HrEmployeeLastJob(models.Model):
     """Gestion des anciens emploie des employes"""
-    _name = 'hr.employee.last.job'
-    _columns = {
-        'employee_id':fields.many2one('hr.employee', 'Employe'),
-        'annee':fields.char('Annee',size=16),
-        # #'poste':fields.selection((('a','A'),('b','B'),('b+','B+'),('c','C'),('c+','C+'),('d','D')),'Note'),
-        'poste':fields.char('Poste', size=32),
-        'employeur':fields.char('Employeur', size=32),
-        'ref':fields.char('Reference', size=32),
-        'ordre':fields.integer('Ordre'),
-        'date_start':fields.date('Debut'),
-        'date_stop':fields.date('Fin'),
 
-    }
-hr_employee_last_job()
+    _name = 'hr.employee.last.job'
+
+    employee_id = fields.Many2one(string='Employe',comodel_name='hr.employee')
+    annee = fields.Char(string=u'Année',size=16)
+    poste = fields.Char(string='Poste',size=32)
+    employeur = fields.Char(string='Employeur',size=32)
+    ref = fields.Char(string='Reference',size=32)
+    ordre = fields.Integer(string='Ordre')
+    date_start = fields.Date(string='Debut')
+    date_stop = fields.Date(string='Fin')
+
