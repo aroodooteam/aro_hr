@@ -19,6 +19,6 @@ class HrEmployeeQualification(models.Model):
         job_id = fields.Many2one(comodel_name='hr.job', related='employee_id.job_id', string='Poste')
         matricule = fields.Char(related='employee_id.matricule', string ='Matricule', store=True)
     
-HrEmployeeQualification()
+
 
 

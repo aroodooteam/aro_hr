@@ -16,6 +16,6 @@ class HrEmployeeMedicalTicket(models.Model):
         date_fin_repos = fields.Date(string = 'Date reprise de poste')
         employee_id = fields.Many2one(comodel_name ='hr.employee', string = 'Salarie')
     
-HrEmployeeMedicalTicket()
+
 
 

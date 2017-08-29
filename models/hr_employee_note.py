@@ -14,5 +14,5 @@ class HrEmployeeNote(models.Model):
         mois = fields.Char(string = 'Mois', size=32),
         ref = fields.Char( string = 'Reference', size=32),
     
-HrEmployeeNote()
+
 

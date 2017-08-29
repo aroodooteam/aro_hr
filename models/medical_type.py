@@ -11,4 +11,4 @@ class MedicalType(models.Model):
             name = fields.Char(string = 'Description', size=32)
             detail = fields.Text(string = 'Text sur document')
         
-MedicalType()
+
