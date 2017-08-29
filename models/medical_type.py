@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models,
 
 
-class medical_type(osv.osv):
+class MedicalType(models.Model):
         _name = 'medical.type'
-        _columns = {
-                'name':fields.char('Description', size=32),
-                'detail':fields.text('Text sur document'),
-        }
-medical_type()
+        _description = "Medical Type"
+
+        
+            name = fields.Char(string = 'Description', size=32)
+            detail = fields.Text(string = 'Text sur document')
+        
+MedicalType()

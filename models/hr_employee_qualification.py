@@ -1,27 +1,24 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models,
 
 
-class hr_employee_qualification(osv.osv):
+class HrEmployeeQualification(models.Model):
     """gestion des qualifications"""
     _name = 'hr.employee.qualification'
-    _columns = {
-        'date': fields.date('Date'),
-        'name': fields.many2one('qual.type', 'Qualification'),
-        'employee_id':fields.many2one('hr.employee', 'Salarie'),
-        'branche_id':fields.many2one('hr.employee.branche', 'Branche'),  # #add by Hari
-        'specialite':fields.char('Specialite', size=16),  # #add by Hari
-        'annee':fields.integer('Annee'),  # #add by Hari
-        'lieu':fields.char('Lieu', size=32),  # #add by Hari
-        'institute_id':fields.many2one('institute', 'Institut'),
-        'job_id':fields.related('employee_id', 'job_id', type="many2one",
-                                relation="hr.job",
-                                string="Poste", store=False),
-        'matricule':fields.related('employee_id', 'matricule', type="char",
-                                    string="Matricule",
-                                    store=True),
+    _description = "Employee Qualification" 
+    
+        date = fields.Date(string = 'Date')
+        name = fields.Many2one(comodel_name = 'qual.type', string = 'Qualification')
+        employee_id = fields.Many2one( comodel_name ='hr.employee', string = 'Salarie')
+        branche_id = fields.Many2one(comodel_name = 'hr.employee.branche', string = 'Branche') # #add by Hari
+        specialite = fields.char(string = 'Specialite', size=16) # #add by Hari
+        annee = fields.Integer(string = 'Annee') # #add by Hari
+        lieu = fields.Char(string= 'Lieu', size=32) # #add by Hari
+        institute_id = fields.Many2one('institute', string = 'Institut')
+        job_id = fields.Many2one(comodel_name='hr.job', related='employee_id.job_id', string='Poste')
+        matricule = fields.Char(related='employee_id.matricule', string ='Matricule', store=True)
+    
+HrEmployeeQualification()
 
-    }
-hr_employee_qualification()
+
