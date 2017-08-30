@@ -5,7 +5,7 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class hr_holidays_status(models.Model):
+class HrHolidaysStatus(models.Model):
 
     _inherit = "hr.holidays.status"
 
@@ -63,3 +63,4 @@ class hr_holidays_status(models.Model):
     global_holiday = fields.Boolean(
         u'Congé commun', help='Definition pas necessaire dans le poste')
     anciennete = fields.Boolean(u'Attribution sur ancienneté')
+    payed = fields.Boolean(string='paye')
