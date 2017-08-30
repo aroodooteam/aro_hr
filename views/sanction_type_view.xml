@@ -16,6 +16,5 @@
             id="menu_hr_employee_sanction_type"
             groups="base.group_hr_manager"/>
 
-
     </data>
 </openerp>

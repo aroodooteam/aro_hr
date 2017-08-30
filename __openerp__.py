@@ -19,7 +19,6 @@
         'views/medical_type_view.xml',
         'views/hr_employee_medical_ticket_view.xml',
 
-        # 'views/hr_contract_view.xml',
         'views/hr_holidays_view.xml',
         'views/hr_employee_view.xml',
         'views/children_view.xml',

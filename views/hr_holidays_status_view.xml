@@ -5,31 +5,20 @@
         <!--
             Heritage Holiday Status
         -->
-        <record model="ir.ui.view" id="view_holiday_status_form2">
-            <field name="name">hr.holidays.status.inherit</field>
-            <field name="model">hr.holidays.status</field>
-            <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form" />
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <field name="active" position="after">
-                    <field name="payed" />
-                </field>
-            </field>
-        </record>
 
         <record model="ir.ui.view" id="view_holiday_status_permission">
             <field name="name">hr.holidays.status.inherit.permission</field>
             <field name="model">hr.holidays.status</field>
-            <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form" />
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <field name="active" position="after">
-                    <field name="anciennete" />
-                    <field name="reset" />
-                    <field name="frequency" />
+                    <field name="anciennete"/>
+                    <field name="reset"/>
+                    <field name="frequency"/>
                     <field name="global_holiday"/>
-                    <field name="days" attrs="{'required':[('global_holiday','=',True)],'invisible':[('global_holiday','=',False)]}" />
-                    <field name="weekend" attrs="{'invisible':[('global_holiday','=',False)]}" />
+                    <field name="days" attrs="{'required':[('global_holiday','=',True)],'invisible':[('global_holiday','=',False)]}"/>
+                    <field name="weekend" attrs="{'invisible':[('global_holiday','=',False)]}"/>
                     <field name="payed" string="Payé"/>
                 </field>
             </field>

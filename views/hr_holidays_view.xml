@@ -2,8 +2,6 @@
 <openerp>
     <data>
 
-        <!--<delete id="hr_holidays.edit_holiday_new_inherit" model="ir.ui.view"/>-->
-        <!--<delete id="hr_holidays.edit_holiday_new" model="ir.ui.view"/>-->
         <record id="edit_holiday_new_inherit" model="ir.ui.view">
             <field name="name">Leave Request</field>
             <field name="model">hr.holidays</field>
@@ -12,11 +10,9 @@
                 <button name="validate" position="replace">
                     <button string="Approve" name="validate" states="confirm" type="workflow" groups="base.group_user" class="oe_highlight"  attrs="{'invisible':[('manager','=',False)]}"/>
                 </button>
-
                 <button name="second_validate" position="replace">
                     <button name="second_validate" string="2eme Validation" states="validate1" type="workflow" groups="base.group_user" class="oe_highlight"  attrs="{'invisible':[('manager','=',False)]}"/>
                 </button>
-
                 <sheet position="replace">
                     <sheet>
                         <group>

@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
     <data>
+
         <record model="ir.ui.view" id="view_hr_employee_sanction_form">
             <field name="name">hr.employee.sanction.form</field>
             <field name="model">hr.employee.sanction</field>

@@ -14,5 +14,6 @@
             name="Type billet médical"
             parent="hr.menu_hr_configuration"
             action="action_medical_type"/>
+
     </data>
 </openerp>
