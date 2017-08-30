@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.actions.act_window" id="action_sanction_type">
+            <field name="name">Type de Sanction</field>
+            <field name="res_model">sanction.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            name="Type de sanctions"
+            parent="hr.menu_hr_configuration"
+            action="action_sanction_type"
+            id="menu_hr_employee_sanction_type"
+            groups="base.group_hr_manager"/>
+
+
+    </data>
+</openerp>

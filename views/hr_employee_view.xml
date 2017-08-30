@@ -391,6 +391,48 @@
             </field>
         </record>
 
+        <record id="children_hr_employee_view_form" model="ir.ui.view">
+            <field name="name">payroll.hr.employee.view.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <group string="Birth" position="after">
+                    <group string="Conjoint(e)">
+                        <field name="spouse"/>
+                    </group>
+                    <group string="Parents">
+                        <field name="mother"/>
+                        <field name="father"/>
+                    </group>
+                    <group string="Enfants" colspan="4">
+                        <group>
+                            <!--separator string="Enfants"/-->
+                            <newline/>
+                            <field name="children_ids" nolabel="1"/>
+                        </group>
+                    </group>
+                </group>
+            </field>
+        </record>
+
+        <record id="view_employee_form_leave_inherit_malagasy" model="ir.ui.view">
+            <field name="name">hr.employee.leave.form.inherit2</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <group string="Leaves" position="replace"/>
+                <button name="%(hr_holidays.act_hr_employee_holiday_request)d" position="replace">
+                    <button name="%(open_company_allocation_employee)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-calendar"
+                        groups="base.group_hr_user">
+                        <field name="leaves_count" widget="statinfo" string="Leaves"/>
+                    </button>
+                </button>
+            </field>
+        </record>
+
     </data>
 </openerp>
 

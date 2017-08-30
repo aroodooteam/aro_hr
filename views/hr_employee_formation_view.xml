@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_hr_employee_formation_tree">
+            <field name="name">hr.employee.formation.tree</field>
+            <field name="model">hr.employee.formation</field>
+            <field name="type">tree</field>
+            <field name="priority">0</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="date" />
+                    <field name="name" />
+                    <field name="specialite" />
+                    <field name="branche_id" />
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</openerp>

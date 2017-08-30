@@ -88,35 +88,6 @@
             </field>
         </record>
 
-        <record id="view_hr_holiday_job" model="ir.ui.view">
-            <field name="name">Congé par poste</field>
-            <field name="model">hr.holiday.job</field>
-            <field name="type">form</field>
-            <field name="arch" type="xml">
-                <form string="Congé par poste">
-                    <group>
-                        <field name="name"/>
-                        <field name="weekend" />
-                        <field name="days" />
-                    </group>
-                </form>
-            </field>
-        </record>
-
-        <record id="view_hr_holiday_job_tree" model="ir.ui.view">
-            <field name="name">Congé par poste</field>
-            <field name="model">hr.holiday.job</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <tree string="Congé par poste">
-                        <field name="job_id"/>
-                        <field name="name"/>
-                        <field name="weekend" />
-                        <field name="days" />
-                </tree>
-            </field>
-        </record>
 
     </data>
 </openerp>
-

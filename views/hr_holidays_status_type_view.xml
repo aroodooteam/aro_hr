@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="act_holidays_status_type" model="ir.actions.act_window">
+            <field name="name">Type de permissions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.holidays.status.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="menu_holidays_status_type"
+            name="Permissions"
+            action="act_holidays_status_type"
+            parent="hr.menu_hr_configuration"/>
+
+    </data>
+</openerp>

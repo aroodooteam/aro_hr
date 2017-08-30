@@ -9,12 +9,12 @@
             <field name="priority">0</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="matricule" />
-                    <field name="job_id" />
-                    <field name="date" />
-                    <field name="name" />
-                    <field name="specialite" />
-                    <field name="branche_id" />
+                    <field name="matricule"/>
+                    <field name="job_id"/>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="specialite"/>
+                    <field name="branche_id"/>
                 </tree>
             </field>
         </record>
@@ -26,43 +26,16 @@
             <field name="priority">0</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="matricule" />
-                    <field name="job_id" />
-                    <field name="date" />
-                    <field name="name" />
-                    <field name="specialite" />
-                    <field name="branche_id" />
+                    <field name="matricule"/>
+                    <field name="job_id"/>
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="specialite"/>
+                    <field name="branche_id"/>
                 </search>
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_hr_employee_formation_tree">
-            <field name="name">hr.employee.formation.tree</field>
-            <field name="model">hr.employee.formation</field>
-            <field name="type">tree</field>
-            <field name="priority">0</field>
-            <field name="arch" type="xml">
-                <tree>
-                    <field name="date" />
-                    <field name="name" />
-                    <field name="specialite" />
-                    <field name="branche_id" />                 
-                </tree>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="view_hr_employee_aptitude_tree">
-            <field name="name">hr.employee.aptitude.tree</field>
-            <field name="model">hr.employee.aptitude</field>
-            <field name="type">tree</field>
-            <field name="priority">0</field>
-            <field name="arch" type="xml">
-                <tree>
-                    <field name="name" />
-                    <field name="niveau" />
-                </tree>
-            </field>
-        </record>
 
         <!-- need to add hr_recruitment before this view work -->
         <!--
@@ -94,7 +67,7 @@
         </record>
         -->
 
-<!--
+        <!--
         <record id="view_applicant_form_inherit_quals" model="ir.ui.view">
             <field name="name">hr_recruitment.crm_case_form_view_job</field>
             <field name="model">hr.applicant</field>
@@ -181,16 +154,16 @@
                             <page string="Compétences">
                                 <group>
                                     <group string="Qualifications" colspan="4">
-                                        <field name="job_qualification_ids" nolabel="1"/>                                        
+                                        <field name="job_qualification_ids" nolabel="1"/>
                                         <field name="qualification_ids" nolabel="1"/>
                                     </group>
                                     <group string="Aptitudes" colspan="4">
-                                        <field name="job_aptitude_ids" nolabel="1"/>                                                                                
+                                        <field name="job_aptitude_ids" nolabel="1"/>
                                         <field name="aptitude_ids" nolabel="1"/>
                                     </group>
                                     <group string="Formations">
                                         <field name="formation_ids" nolabel="1"/>
-                                    </group>                                    
+                                    </group>
                                 </group>
                             </page>
                             <page string="Résumé">
@@ -201,7 +174,8 @@
                     </sheet>
             </field>
         </record>
--->
+        -->
+
     </data>
 </openerp>
 

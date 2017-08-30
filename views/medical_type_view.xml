@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.actions.act_window" id="action_medical_type">
+            <field name="name">Type billet medical</field>
+            <field name="res_model">medical.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem
+            id="menu_medical_type"
+            name="Type billet médical"
+            parent="hr.menu_hr_configuration"
+            action="action_medical_type"/>
+    </data>
+</openerp>
