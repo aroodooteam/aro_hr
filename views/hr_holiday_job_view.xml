@@ -10,8 +10,8 @@
                 <form string="Congé par poste">
                     <group>
                         <field name="name"/>
-                        <field name="weekend" />
-                        <field name="days" />
+                        <field name="weekend"/>
+                        <field name="days"/>
                     </group>
                 </form>
             </field>
@@ -25,8 +25,8 @@
                 <tree string="Congé par poste">
                     <field name="job_id"/>
                     <field name="name"/>
-                    <field name="weekend" />
-                    <field name="days" />
+                    <field name="weekend"/>
+                    <field name="days"/>
                 </tree>
             </field>
         </record>
