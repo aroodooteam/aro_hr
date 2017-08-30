@@ -27,6 +27,8 @@
         'views/hr_job_view.xml',
         'views/hr_holiday_job_view.xml',
         'views/hr_qualification_view.xml',
+        'views/hr_applicant_view.xml',
+
         'views/hr_employee_formation_view.xml',
         'views/hr_employee_aptitude_view.xml',
     ],
