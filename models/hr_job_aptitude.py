@@ -3,7 +3,7 @@
 from openerp import api, exceptions, fields, models, _
 
 
-class HrJobAptitude(models.model):
+class HrJobAptitude(models.Model):
 
     _name = "hr.job.aptitude"
     _description = "Aptitude necessaire pour un poste"
