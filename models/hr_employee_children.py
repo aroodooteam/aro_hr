@@ -58,4 +58,4 @@ class HrEmployeeChildren(models.Model):
     date_birth = fields.Date(string='Date de naissance')
     age = fields.Char(compute='_get_age', string='Age')
     employee_id = fields.Many2one(string='Parent',comodel_name='hr.employee',)
-    sexe = fields.Selection(string='Sexe',selection=[('m', 'M'), ('f', 'F')])
+    sex = fields.Selection(string='Sexe',selection=[('m', 'M'), ('f', 'F')])
