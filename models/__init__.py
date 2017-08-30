@@ -32,7 +32,7 @@ import institute
 import hr_job_qualification
 import hr_applicant_qualification
 import hr_task_categ
-import hr_employee_task
+import hr_job_task
 import hr_applicant
 import payment_mode
 import payment_term
