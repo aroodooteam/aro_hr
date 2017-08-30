@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_hr_call_calendar">
+            <field name="name">hr.call.form</field>
+            <field name="model">hr.call</field>
+            <field name="type">calendar</field>
+            <field name="arch" type="xml">
+                <calendar color="work_location" date_start="date_start" event_open_popup="True" quick_add="False">
+                    <field name="name" />
+                    <field name="job_id" />
+                    <field name="work_location" />            
+                </calendar>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_hr_call_form">
+            <field name="name">hr.call.form</field>
+            <field name="model">hr.call</field>
+            <field name="type">form</field>
+            <field name="priority">0</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="name" />
+                        <field name="date_start" />
+                        <field name="date_stop" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_hr_call">
+            <field name="name">Gardes</field>
+            <field name="res_model">hr.call</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">calendar,tree,form</field>
+            <field name="limit">80</field>
+            <field name="target">current</field>
+        </record>
+        <menuitem
+            id="menu_hr_call"
+            name="Planning gardes"
+            parent="hr_attendance.menu_hr_attendance"
+            action="action_hr_call" />
+    </data>
+</openerp>

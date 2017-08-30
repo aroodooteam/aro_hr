@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- Root Menus -->
+        <!-- Contract View -->
+        <record id="hr_contract_form_inherit" model="ir.ui.view">
+            <field name="name">hr.contract.view.form.inherit</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                    <field name="wage" position="after">
+                        <field name="wage_type_id"/>
+                        <!--<field name="cotisation" />-->
+                        <field name="salary_clause"/>
+                        <!--<field name="categ_id"/>-->
+                        <!--<field name="index_name"/>-->
+                        <!--<field name="salary_index"/>-->
+                        <button name="net_to_brute" class="oe_inline oe_stat_button" string="Net > Brute" type="object" icon="fa-gears" />
+                        <button name="index_promote" class="oe_inline oe_stat_button" string="Prom. Indice" type="object" icon="fa-rocket" />
+                        <button name="copy_contract" class="oe_inline oe_stat_button" string="Reporter" type="object" icon="fa-random" />
+
+                    </field>
+                    <!--
+                    <page string="Information" name="information" position="after">
+
+                        <page string="Les rubriques">
+                            <field colspan="4" name="rubrique_ids" nolabel="1"
+                                widget="one2many_list">
+                                <form string="Lignes rubriques">
+                                    <group col="6" colspan="4">
+                                        <field name="rubrique_id" />
+                                        <field name="montant" />
+                                        <field name="taux" />
+                                        <field name="permanent" />
+                                    </group>
+                                    <group col="6" colspan="4"
+                                        attrs="{'invisible':[('permanent','==',True)]}">
+
+                                        <field name="period_id" on_change="onchange_period_id(period_id)" />
+                                        <field name="date_start" />
+                                        <field name="date_stop"/>
+                                    </group>
+                                    <newline/>
+                                    <button name="create_small_expenses" string="Creer la depense" type="object"/>
+
+                                </form>
+                            </field>
+                        </page>
+                    </page>
+                    -->
+            </field>
+        </record>
+        <!-- End Contract View-->
+    </data>
+</openerp>

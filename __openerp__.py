@@ -14,6 +14,14 @@
         # 'actions/act_window.xml',
         # 'menu.xml',
         # 'data/data.xml',
+        'views/hr_employee_sanction_view.xml',
+        'views/hr_contract_view.xml',
+        'views/hr_employee_view.xml',
+        'views/children_view.xml',
+        'views/hr_view.xml',
+        'views/hr_holiday.xml',
+        'views/hr_job.xml',
+        'views/hr_qualification.xml',
     ],
     'depends': [
         'base', 'hr'

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--<delete id="hr.view_hr_job_form_qualifications" model="ir.ui.view"/>-->
+        <record id="view_hr_job_form_qualifications" model="ir.ui.view">
+            <field name="name">hr.view_hr_job_form_qualifications</field>
+            <field name="model">hr.job</field>
+            <!--<field name="inherit_id" ref="hr.view_hr_job_form"/>-->
+            <field name="inherit_id" ref="hr_recruitment.hr_job_survey"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <group name="employee_data" position="after"/>
+                    <div>
+                        <notebook>
+                            <page string="Qualifications">
+                                <field name="qualification_ids" />
+                            </page>
+                            <page string="Aptitudes">
+                                <field name="aptitude_ids" />
+                            </page>
+                            <page string="Formations">
+                                <field name="formation_ids" />
+                            </page>
+                            <page string="Divers">
+                                <group>
+                                     <field name="time_start" />
+                                     <field name="time_stop" />
+                                     <field name="internal_relation" />
+                                     <field name="external_relation" />
+                                     <field name="task_ids" />
+                                </group>
+                            </page>
+                        </notebook>
+                    </div>
+            </field>
+        </record>
+
+        <!--
+        <record id="hr.view_hr_job_form_salary_index" model="ir.ui.view">
+            <field name="name">hr.view_hr_job_form_salary_index</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="hr.view_hr_job_form_qualifications"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <page string="Formations" position="after">
+                    <page string="Salaire basé sur indice">
+                        <group>
+                            <field name="categ_id"/>
+                        </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+        -->
+
+        <record model="ir.ui.view" id="view_holiday_status_form2">
+            <field name="name">hr.job.inherit</field>
+            <field name="model">hr.job</field>
+            <field name="inherit_id" ref="l10n_mg_hr_payroll.view_hr_job_form_qualifications"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="state" position="before">
+                    <button type="object" name="create_survey" string="Generer Evaluation" />
+                </field>
+                <notebook position="inside">
+                    <page string="Congés">
+                        <group>
+                            <field name="replacement" />
+                        </group>
+                        <group>
+                            <field name="hr_holiday_job_ids" nolabel="1">
+                            <tree>
+                                <field name="name"/>
+                                <field name="weekend"/>
+                                <field name="days"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <field name="name"/>
+                                    <field name="weekend"/>
+                                    <field name="days"/>
+                                </group>
+                            </form>
+                            </field>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record id="view_hr_holiday_job" model="ir.ui.view">
+            <field name="name">Congé par poste</field>
+            <field name="model">hr.holiday.job</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Congé par poste">
+                    <group>
+                        <field name="name"/>
+                        <field name="weekend" />
+                        <field name="days" />
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_hr_holiday_job_tree" model="ir.ui.view">
+            <field name="name">Congé par poste</field>
+            <field name="model">hr.holiday.job</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Congé par poste">
+                        <field name="job_id"/>
+                        <field name="name"/>
+                        <field name="weekend" />
+                        <field name="days" />
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+

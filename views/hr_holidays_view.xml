@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="hr_holidays.edit_holiday_new_inherit" model="ir.ui.view">
+            <field name="name">Leave Request</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="arch" type="xml">
+                <button name="validate" position="replace">
+                    <button string="Approve" name="validate" states="confirm" type="workflow" groups="base.group_user" class="oe_highlight"  attrs="{'invisible':[('manager','=',False)]}"/>
+                </button>
+
+                <button name="second_validate" position="replace">
+                    <button name="second_validate" string="2eme Validation" states="validate1" type="workflow" groups="base.group_user" class="oe_highlight"  attrs="{'invisible':[('manager','=',False)]}"/>                
+                </button>
+
+                <sheet position="replace">
+                    <sheet>
+                    <group>
+                        <group>
+                            <field name="name" attrs="{'readonly':[('state','!=','draft'),('state','!=','confirm')], 'required': [('type', '=', 'add')]}"/>
+                            <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}" on_change="onchange_employee(employee_id)"/>                            
+                            <field name="holiday_status_id" context="{'employee_id':employee_id}"/>
+                            <field name="status_type_id" />
+                            <label for="number_of_days_temp" string="Duration"/>
+
+
+                            <div>
+                                <group col="2">
+                                    <field name="date_from" on_change="onchange_date_from(date_to, date_from)" attrs="{'invisible': [('type', '=', 'add')],'required':[('type', '=', 'remove')]}" class="oe_inline"/>
+                                    <field name="number_of_days_temp" class="oe_inline"/> days
+                                    <field name="date_to"  attrs="{'invisible': [('type', '=', 'add')],'required':[('type', '=', 'remove')]}" class="oe_inline"/>
+                                </group>
+                            </div>
+
+                        </group>
+                        <group>
+                            <field name="manager" invisible="True" />
+                            <field name="holiday_type" on_change="onchange_type(holiday_type)" attrs="{'readonly':[('type', '=', 'remove'),('state','!=','draft')]}" string="Mode" groups="base.group_hr_user" context="{'employee_id':employee_id}" />
+                            <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'readonly': [('type', '=', 'remove'),('state','!=','draft'), ('state','!=','confirm')], 'invisible':[('holiday_type','=','employee')]}"/>
+                            <field name="department_id" attrs="{'readonly':['|', ('type','=','add'),('holiday_type','=','category')],'invisible':[('holiday_type','=','category')]}" groups="base.group_hr_user"/>
+                            <field name="replacement" />
+                            <field name="replacement_ids" colspan="2" nolabel="1">
+                                <tree string="" create="1" delete="1" edit="1" editable="top">
+                                    <field name="employee_id" />
+                                    <field name="date_start" />
+                                    <field name="date_stop" />
+                                </tree>
+                            </field>
+
+                        </group>
+                    </group>
+                    <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..." attrs="{'invisible': [('type', '=', 'remove')]}"/>
+                    </sheet>
+                </sheet>                
+            </field>
+        </record> 
+
+        <record model="ir.actions.act_window" id="open_company_allocation_employee">
+            <field name="name">Résumé des congés</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_group_type': 1,'search_default_employee_id': [active_id], 'default_employee_id': active_id}</field>
+            <field name="domain">[('holiday_type','=','employee'), ('state', '!=', 'refuse')]</field>
+            <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        </record>
+
+        
+        <record id="view_employee_form_leave_inherit_malagasy" model="ir.ui.view">
+            <field name="name">hr.employee.leave.form.inherit2</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <group string="Leaves" position="replace"/>
+                <button name="%(hr_holidays.act_hr_employee_holiday_request)d" position="replace">
+                    <button name="%(open_company_allocation_employee)d"
+                        type="action"
+                        class="oe_stat_button"
+                        icon="fa-calendar"
+                        groups="base.group_hr_user">
+                        <field name="leaves_count" widget="statinfo" string="Leaves"/>
+                    </button>
+                </button>
+            </field>
+        </record>
+
+
+                <record model="ir.ui.view" id="view_holiday_status_permission">
+                        <field name="name">hr.holidays.status.inherit.permission</field>
+                        <field name="model">hr.holidays.status</field>
+                        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form" />
+                        <field name="type">form</field>
+                        <field name="arch" type="xml">
+                            <field name="active" position="after">
+                                <field name="anciennete" />
+                                <field name="reset" />
+                                <field name="frequency" />
+                                <field name="global_holiday"/>
+                                <field name="days" attrs="{'required':[('global_holiday','=',True)],'invisible':[('global_holiday','=',False)]}" />
+                                <field name="weekend" attrs="{'invisible':[('global_holiday','=',False)]}" />                                
+                                <field name="payed" string="Payé"/>
+                            </field>
+                        </field>
+                </record>
+
+
+
+
+        <record id="act_holidays_status_type" model="ir.actions.act_window">
+            <field name="name">Type de permissions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hr.holidays.status.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem
+            id="menu_holidays_status_type"
+            name="Permissions"
+            action="act_holidays_status_type"
+            parent="hr.menu_hr_configuration"/>
+
+        <menuitem parent="hr_holidays.menu_open_ask_holidays" id="hr_holidays.menu_open_allocation_holidays" action="hr_holidays.open_allocation_holidays" groups="base.group_hr_user"/>
+
+        <record id="view_hr_holidays_filter_extend" model="ir.ui.view">
+            <field name="name">hr.holidays.filter.extd</field>
+            <field name="model">hr.holidays</field>
+            <field name="inherit_id" ref="hr_holidays.view_hr_holidays_filter" />
+            <field name="arch" type="xml">
+                    <field name="name" position="after">
+                            <filter domain="[('replacement','=',1)]" string="À remplacer" name="to_replace"/>
+                            <separator/>                            
+                            <filter domain="[('replacement_ids','=',False)]" string="Sans Remplacements" name="no_replace"/>
+                            <separator/>
+                    </field>
+                    <filter domain="[('state','=','draft')]" string="To Confirm" position="replace">
+                        <filter domain="[('state','=','draft')]" name="draft" string="To Confirm"/>                       
+                    </filter>
+
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="replace_approve_holidays">
+            <field name="name">Requests to Approve</field>
+            <field name="res_model">hr.holidays</field>
+            <field name="view_type">form</field>
+            <field name="context">{'default_type': 'remove', 'search_default_to_replace':1,'search_default_approve':1, 'search_default_no_replace':1 }</field>
+            <field name="domain">[('type','=','remove')]</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="search_view_id" ref="hr_holidays.view_hr_holidays_filter"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_replace_approve_holidays_tree">
+            <field name="sequence" eval="1"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="hr_holidays.view_holiday"/>
+            <field name="act_window_id" ref="replace_approve_holidays"/>
+        </record>
+
+        <record model="ir.actions.act_window.view" id="action_replace_approve_holidays_form">
+            <field name="sequence" eval="2"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="hr_holidays.edit_holiday_new"/>
+            <field name="act_window_id" ref="replace_approve_holidays"/>
+        </record>
+
+        <menuitem name="Remplacements" parent="hr_holidays.menu_open_ask_holidays" id="menu_replace_approve_holidays" action="replace_approve_holidays" groups="base.group_hr_user"/>
+        
+    </data>
+</openerp>
+

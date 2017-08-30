@@ -1,0 +1,110 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+    <record model="ir.ui.view" id="view_hr_employee_sanction_form">
+        <field name="name">hr.employee.sanction.form</field>
+        <field name="model">hr.employee.sanction</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="hr.employee.sanction">
+                <group>
+                    <field name="name" select="0"/>
+                    <field name="type" select="1"/>
+                    <field name="motif" select="1"/>
+                    <field name="date" select="2"/>
+                    <field name="date_interview" select="0"/>
+                    <field name="date_start" select="0"/>
+                    <field name="date_end" select="0"/>
+                    <field name="description" select="0"/>
+                    <field name="suite" select="0"/>
+                </group>
+
+
+            </form>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="view_hr_employee_sanction_tree">
+        <field name="name">hr.employee.sanction.tree</field>
+        <field name="model">hr.employee.sanction</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="hr.employee.sanction">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="type"/>
+                <field name="motif"/>
+            </tree>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="action_hr_employee_sanction">
+        <field name="name">Sanctions</field>
+        <field name="res_model">hr.employee.sanction</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+    </record>
+
+    <menuitem
+            name="Sanctions"
+            parent="hr.menu_hr_main"
+            action="action_hr_employee_sanction"
+            id="menu_hr_employee_sanction"
+            groups="base.group_hr_manager"/>
+
+    <record model="ir.actions.act_window" id="action_sanction_type">
+        <field name="name">Type de Sanction</field>
+        <field name="res_model">sanction.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+            name="Type de sanctions"
+            parent="hr.menu_hr_configuration"
+            action="action_sanction_type"
+            id="menu_hr_employee_sanction_type"
+            groups="base.group_hr_manager"/>
+
+    <record model="ir.actions.act_window" id="action_medical_type">
+        <field name="name">Type billet medical</field>
+        <field name="res_model">medical.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_medical_type"
+        name="Type billet médical"
+        parent="hr.menu_hr_configuration"
+        action="action_medical_type" />
+
+    <record model="ir.ui.view" id="view_hr_employee_medical_ticket_tree">
+        <field name="name">hr.employee.medical.ticket.tree</field>
+        <field name="model">hr.employee.medical.ticket</field>
+        <field name="type">tree</field>
+        <field name="priority">0</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="date" />
+                <field name="employee_id" />
+                <field name="name" />
+                <field name="repos" />
+                <field name="date_debut_repos" />
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_hr_employee_medical_ticket">
+        <field name="name">Billet Medical</field>
+        <field name="res_model">hr.employee.medical.ticket</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="menu_hr_employee_medical_ticket"
+        name="Billet Médical"
+        parent="hr.menu_hr_main"
+        action="action_hr_employee_medical_ticket" />
+</data>
+</openerp>

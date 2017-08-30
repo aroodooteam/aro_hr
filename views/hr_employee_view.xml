@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- view used for payroll -->
+        <!--
+        <record id="view_employee_category_form_index" model="ir.ui.view">
+            <field name="name">Index sur Catégories</field>
+            <field name="model">hr.employee.category</field>
+            <field name="inherit_id" ref="hr.view_employee_category_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <group position="after">
+                    <group>
+                    <notebook>
+                        <page>
+                            <group>
+                                <field nolabel="1" name="rubrique_ids">
+                                    <tree editable="top">
+                                        <field name="name"/>
+                                        <field name="montant"/>
+                                    </tree>
+                                </field>
+                                <newline/>
+                                <field nolabel="1" name="index_ids">
+                                    <tree editable="top">
+                                        <field name="name"/>
+                                        <field name="index"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </page>
+                    </notebook>
+                    </group>
+                </group>
+            </field>
+        </record>
+        -->
+
+        <!-- Employee View -->
+        <record id="payroll_hr_employee_view_form" model="ir.ui.view">
+            <field name="name">payroll.hr.employee.view.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="matricule"/>
+                    <field name="visible" groups="base.group_no_one"/>
+                </field>
+                <group string="Active" name="active_group" position="replace">
+                    <group string="Paramètres">
+                        <field name="active"/>
+                        <field name="anciennete" string="Ancienneté"/>
+                        <field name="affilie"/>
+                        <field name="chargefam" string="Charges Familiales"/>
+                    </group>
+                    <!--<group string="Calcul IR">
+                        <field name="logement" string="Logement"/>
+                    </group>-->
+                    <group string="Calcul STC">
+                        <field name="date"/>
+                        <field name="seniority" string="Ancienneté"/>
+                        <field name="preavis" string="Préavis"/>
+                    </group>
+                </group>
+                <field name="identification_id" groups="base.group_hr_user" position="replace">
+                        <field name="identification_id" groups="base.group_hr_user" string="CIN"/>
+                        <field name="cin_date"/>
+                        <field name="cin_place"/>
+                </field>
+
+                <field name="otherid" position="replace">
+                        <field name="otherid" string="CNAPS"/>
+                </field>
+
+                <page string="HR Settings" groups="base.group_hr_user" position="after">
+                    <page string="Banque" attrs="{'invisible':[('visible','=',False)]}">
+                        <!--<group string="Informations sur la banque">
+                        	<field name="mode_reglement" string="Mode de Reglement" />
+                        	<field name="compte" string="Compte" required="1"/>
+                        	<field name="bank" string="Banque" required="1"/>      
+                        </group>-->
+			            <separator string="Mode de Reglement"/>
+                        <field name="payment_term_id" context="{'employee_id':id}">
+                            <form>
+                                <group>
+                                <field name="name"/>
+                                <field name="rate" />
+                                <field name="bank_account_id" />
+                                <field name="bank_id" />
+                                <field name="state" />
+                                </group>
+                            </form>
+                            <tree>
+                                <field name="name"/>
+                                <field name="rate" />
+                                <field name="bank_account_id" />
+                                <field name="bank_id" />
+                                <field name="state" />
+                            </tree>
+				        </field>
+                        <!--<separator string="Prêts"/>
+                        <group>
+                        <field name="loan" nolabel="1"/> 
+                        </group>                -->      
+                    </page>
+                    <!--page string="Sanctions" attrs="{'invisible':[('visible','=',False)]}">
+                        <field colspan="4" name="sanction_ids" nolabel="1" context="{'default_name': active_id}">
+                            <tree>
+                                <field colspan="4" name="date" />
+                                <field colspan="4" name="motif" />
+                                <field colspan="4" name="type" />
+                                <button name="Imprimer" string="Imprimer" type="action" icon="gtk-print"/>
+
+                            </tree>
+                            <form string="hr.employee.sanction">
+                                <group>
+                                    <field name="type" select="1"/>
+                                    <field name="motif" select="1"/>
+                                    <field name="date" select="2"/>
+                                    <field name="name" readonly="True"/>
+                                    <field name="date_interview" select="0"/>
+                                    <field name="date_start" select="0"/>
+                                    <field name="date_end" select="0"/>
+                                    <field name="description" select="0"/>
+                                    <field name="suite" select="0"/>
+                                </group>
+                            </form>
+                        </field>
+                    </page-->
+                    <page string="Medicale" attrs="{'invisible':[('visible','=',False)]}">
+                        <field colspan="4" name="medical_ids" nolabel="1">
+                            <tree>
+                            <field colspan="4" name="name" />
+                            <field colspan="4" name="date" />
+                            </tree>
+                            <form>
+                                <group>
+                                    <group>
+                                    <field name="date" />
+                                    <field name="name" />
+                                    <field name="repos" />
+                                    </group>
+                                    <group attrs="{'invisible':[('repos','=',False)]}">
+                                    <field name="date_debut_repos" />
+                                    <field name="date_fin_repos" />
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
+                    </page>
+                    <!--page string="Compétences" attrs="{'invisible':[('visible','=',False)]}">
+                        <group cols="8">
+                            <group colspan="8">
+                                <table>
+                                <th style="padding:10px">
+                                <field name="qualification_job" nolabel="1" string="Qualification/Poste" widget="percentpie"/>
+                                </th><th style="padding:10px">
+                                <field name="aptitude_job" nolabel="1" string="Aptitude/Poste" widget="percentpie"/>
+                                </th><th style="padding:10px">
+                                <field name="training_job" nolabel="1" string="Formation/Poste" widget="percentpie"/>
+                                </th>
+                                </table>
+                            </group>
+
+                            <group string="Qualifications" colspan="8">
+                                <field name="qualification_ids" nolabel="1"/>
+                            </group>
+
+                            <group string="Formations" colspan="8">
+                                <field name="formation_ids" nolabel="1"/>
+                            </group>
+
+                            <group string="Aptitudes" colspan="8">
+                                <field name="aptitude_ids" nolabel="1"/>
+                            </group>
+
+                            <group string="Note de l'employe" colspan="8">
+                                <field name="note_ids" nolabel="1">
+                                <tree>
+                                    <field name="note" />
+                                    <field name="annee" />
+                                    <field name="mois" />
+                                    </tree>
+                                </field>
+                            </group>
+                                
+                            <group string="Emplois antérieurs" colspan="8">
+                                <field name="lastjob_ids" nolabel="1">
+                                <tree>
+                                    <field name="date_start"/>
+                                    <field name="date_stop"/>
+                                    <field name="employeur"/>
+                                    <field name="poste"/>
+                                </tree>
+                                </field>     
+                            </group>
+
+                            <group string="Decorations" colspan="8">
+                                <field name="decoration_ids" nolabel="1">
+                                    <tree>
+                                        <field name="decoration_id"/>
+                                        <field name="annee"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </group>
+                    </page-->
+                    <page string="Contracts" groups="base.group_hr_manager">
+                        <group groups="base.group_hr_manager">
+                            <!--<field name="salary_index" groups="base.group_hr_manager"/>-->
+                            <!--<field name="salary_index_name" groups="base.group_hr_manager"/>-->
+
+                            <newline/>
+                            <field colspan="4" name="contract_ids" nolabel="1"  groups="base.group_hr_manager">
+                                <tree>
+                                    <field name="name" />
+                                    <field name="job_id" />
+                                    <field name="type_id" />
+                                    <field name="wage" />
+                                    <field name="date_start" />
+                                    <field name="date_end" />
+                                </tree>
+                                <form string="Contract">
+                                    <sheet>
+                                        <div class="oe_title">
+                                            <label for="name" class="oe_edit_only"/>
+                                            <h1>
+                                                <field name="name" placeholder="Contract Reference"/>
+                                            </h1>
+                                        </div>
+                                        <group>
+                                            <group>
+                                                <field name="job_id"/>
+                                            </group>
+                                            <group>
+                                                <field name="type_id"/>
+                                            </group>
+                                        </group>
+                                        <notebook>
+                                            <page string="Information" name="information">
+                                                <group>
+                                                    <group name="salary_and_advantages" string="Salary and Advantages">
+                                                        <field name="wage"/>
+                                                        <field name="advantages" nolabel="1" placeholder="Advantages..." colspan="2"/>
+                                                    </group>
+                                                    <group name="duration_group" string="Duration">
+                                                        <label for="trial_date_start" string="Trial Period Duration"/>
+                                                        <div>
+                                                            <field name="trial_date_start" class="oe_inline"/> - <field name="trial_date_end" class="oe_inline"/>
+                                                        </div>
+                                                        <label for="date_start" string="Duration"/>
+                                                        <div>
+                                                            <field name="date_start" class="oe_inline"/> - <field name="date_end" class="oe_inline"/>
+                                                        </div>
+                                                        <field name="working_hours"/>
+                                                    </group>
+                                                </group>
+                                                <separator string="Notes"/>
+                                                <field name="notes"/>
+                                            </page>
+                                            <page string="Work Permit">
+                                                <group col="4">
+                                                    <field name="visa_no"/>
+                                                    <field name="permit_no"/>
+                                                    <field name="visa_expire"/>
+                                                </group>
+                                            </page>
+                                        </notebook>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </group>
+                    </page>
+                </page>
+            </field>
+        </record>
+
+        <!-- End Employee View -->
+        <!-- HR Kanban View  -->
+        <record id="hr_kanban_view_employees_contact" model="ir.ui.view">
+            <field name="name">Kanban Employés</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.hr_kanban_view_employees"/>
+            <field name="arch" type="xml">
+                <div class="oe_kanban_footer_left" position="replace"/>
+                <div class="oe_followers" position="replace">
+                    <div>
+                        <field name="state" />
+                        <button class="oe_kanban_button oe_kanban_color_2" name="attendance_action_change" states="present" string="Sign Out" type="object" context="{'type':'sign_out'}" groups="base.group_user">Sortie</button>
+                        <button class="oe_kanban_button oe_kanban_color_1" name="attendance_action_change" states="absent" string="Sign In" type="object" context="{'type':'sign_in'}" groups="base.group_user">Entrée</button>
+                    </div>
+                </div>
+            </field>
+        </record>
+
+        <record id="hr_employee_tree_view_matricule" model="ir.ui.view">
+            <field name="name">Employés</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <field name="contract_type_id"/>
+                    <field name="matricule"/>
+                    <!--<field name="salary_index" groups="hr.group_hr_manager"/>-->
+                </field>
+            </field>
+        </record>
+
+        <record id="hr_employee_form_view_contract_type" model="ir.ui.view">
+            <field name="name">Employés</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="contract_type_id"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="hr.view_employee_filter" model="ir.ui.view">
+            <field name="name">Employees</field>
+            <field name="model">hr.employee</field>
+            <field name="arch" type="xml">
+                <search string="Employees">
+                    <field name="name" string="Employees" filter_domain="['|',('work_email','ilike',self),('name','ilike',self)]"/>
+                    <field name="department_id" />
+                    <field name="category_ids" groups="base.group_hr_user"/>
+                    <filter string="MonEquipe" domain="['|','|','|',('user_id', '=', uid), ('parent_id.user_id', '=', uid),('parent_id.parent_id.user_id','=',uid),('parent_id.parent_id.parent_id.user_id','=',uid)]" name="my_team_filter"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Manager" icon="terp-personal" domain="[]" context="{'group_by':'parent_id'}"/>
+                        <filter string="Coach" icon="terp-personal" domain="[]" context="{'group_by':'coach_id'}"/>
+                        <filter string="Department" icon="terp-personal+" domain="[]" context="{'group_by':'department_id'}"/>
+                        <filter string="Job" icon="terp-gtk-select-all" domain="[]" context="{'group_by':'job_id'}"/>
+                        <filter string="Company" icon="terp-go-home" domain="[]" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
+                    </group>
+                </search>
+             </field>
+         </record>
+
+        <record id="hr.open_view_employee_list_my" model="ir.actions.act_window">
+            <field name="name">Employees</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{
+                'search_default_my_team_filter': 1
+                }</field>
+            <field name="view_id" eval="False"/>
+            <field name="search_view_id" ref="hr.view_employee_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new employee.
+              </p><p>
+                With just a quick glance on the Odoo employee screen, you
+                can easily find all the information you need for each person;
+                contact data, job position, availability, etc.
+              </p>
+            </field>
+        </record>
+
+        <record id="hr.view_employee_filter_matricule" model="ir.ui.view">
+            <field name="name">Employés</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <field name="name" position="before">
+                    <field name="matricule"/>    
+                    <field name="job_id"/> 
+                    <field name="contract_type_id"/> 
+                    <group name="Présence">                       
+                    <filter string="Absent"
+                        name="absent"
+                        domain="[('state','=','absent')]"
+                        />
+                    <filter string="Présent"
+                        name="present"
+                        domain="[('state','=','present')]"
+                        />
+                    <filter string="Retard"
+                        name="late"
+                        domain="[('state','=','late')]"
+                        />                
+                    <filter string="Congé"
+                        name="holiday"
+                        domain="[('state','=','holiday')]"
+                        />
+                    </group>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>
+
