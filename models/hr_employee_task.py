@@ -24,42 +24,6 @@ from openerp.osv import fields, osv
 import datetime
 
 
-
-"""
-class hr_applicant(osv.osv):
-    _inherit = 'hr.applicant'
-    def _get_salary(self, cr, uid, ids, name, arg, context={}):
-        result = {}
-        net=0
-        param_obj=self.pool.get('hr.payroll_ma.parametres')
-        param_ids=param_obj.search(cr,uid,[])
-        param_ids=param_obj.browse(cr,uid,param_ids)
-        for param in param_ids:
-            if not param.salary_on_index:
-                return False
-            else:
-                index_value=param.index
-        for payroll in self.browse(cr, uid, ids, context):
-            for index in payroll.job_id.categ_id.index_ids:
-                result[payroll.id] = index.index*173.33*index_value/5
-                break
-        return result
-
-    _columns = {
-        'qualification_ids':fields.one2many('hr.applicant.qualification','applicant_id','Qualifications'),
-        'formation_ids':fields.one2many('hr.applicant.formation','applicant_id','Formation'),#add by Hari
-        'aptitude_ids':fields.one2many('hr.applicant.aptitude','applicant_id','Aptitudes'),
-        'job_qualification_ids':fields.related('job_id','qualification_ids',string='Qualifications Requise',type='one2many',relation='hr.job.qualification'),
-        'job_aptitude_ids':fields.related('job_id','aptitude_ids',string='Aptitudes Requise',type='one2many',relation='hr.job.aptitude' ),
-        'job_qualification_ids':fields.related('job_id','qualification_ids',string='Qualifications Requise',type='one2many',relation='hr.job.qualification'),
-        'job_formation_ids':fields.related('job_id','formation_ids',string='Formations necessaire',type='one2many',relation='hr.job.formation'),
-
-        'salary_index':fields.function(_get_salary,method=True, type='float',digits=(16, 2), string='Salaire Indicatif'),
-
-    }
-"""
-
-
 class hr_employee_task(osv.osv):
     _name = 'hr.job.task'
 
