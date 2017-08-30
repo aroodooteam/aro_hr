@@ -3,7 +3,7 @@
     <data>
 
         <!--
-            Heritage Holiday Status 
+            Heritage Holiday Status
         -->
         <record model="ir.ui.view" id="view_holiday_status_form2">
             <field name="name">hr.holidays.status.inherit</field>
@@ -37,4 +37,3 @@
 
     </data>
 </openerp>
-    
