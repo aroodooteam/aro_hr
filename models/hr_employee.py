@@ -50,6 +50,12 @@ class hr_employee(osv.osv):
             res[emp.id] = visible
         return res
 
+    # TODO
+    def attendance_action_change(self, cr, uid, ids, context=None):
+        if not context:
+            return {}
+        return False
+
     _columns = {
         'matricule': fields.char('Matricule', size=64),
         'cin': fields.char('CIN', size=64),
@@ -85,6 +91,10 @@ class hr_employee(osv.osv):
 
         'aptitude_ids':fields.one2many('hr.employee.aptitude', 'employee_id', 'Aptitudes'),
     }
+    _defaults = {
+        'state': 'absent'
+    }
+
 hr_employee()
 
 
