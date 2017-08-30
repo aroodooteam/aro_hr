@@ -56,31 +56,31 @@
         <record model="ir.ui.view" id="view_holiday_status_form2">
             <field name="name">hr.job.inherit</field>
             <field name="model">hr.job</field>
-            <field name="inherit_id" ref="l10n_mg_hr_payroll.view_hr_job_form_qualifications"/>
+            <field name="inherit_id" ref="aro_hr.view_hr_job_form_qualifications"/>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <field name="state" position="before">
-                    <button type="object" name="create_survey" string="Generer Evaluation" />
+                    <button type="object" name="create_survey" string="Generer Evaluation"/>
                 </field>
                 <notebook position="inside">
                     <page string="Congés">
                         <group>
-                            <field name="replacement" />
+                            <field name="replacement"/>
                         </group>
                         <group>
                             <field name="hr_holiday_job_ids" nolabel="1">
-                            <tree>
-                                <field name="name"/>
-                                <field name="weekend"/>
-                                <field name="days"/>
-                            </tree>
-                            <form>
-                                <group>
+                                <tree>
                                     <field name="name"/>
                                     <field name="weekend"/>
                                     <field name="days"/>
-                                </group>
-                            </form>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <field name="name"/>
+                                        <field name="weekend"/>
+                                        <field name="days"/>
+                                    </group>
+                                </form>
                             </field>
                         </group>
                     </page>
