@@ -8,12 +8,16 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="children">
-                    <field name="name" select="1"/>
-                    <field name="prenom" select="2"/>
-                    <field name="date_birth" select="0"/>
-                    <field name="age" select="0"/>
-                    <field name="employee_id" select="0"/>
-                    <field name="sex" select="0"/>
+                    <sheet>
+                        <group colspan="4">
+                            <field name="name" select="1"/>
+                            <field name="prenom" select="2"/>
+                            <field name="date_birth" select="0"/>
+                            <field name="age" select="0"/>
+                            <field name="employee_id" select="0"/>
+                            <field name="sex" select="0"/>
+                        </group>
+                    </sheet>
                 </form>
             </field>
         </record>
