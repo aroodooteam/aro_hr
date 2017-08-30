@@ -15,68 +15,59 @@ class hr_employee(osv.osv):
             if employee['birthday']:
                 res[employee['id']] = datetime.datetime.strptime(employee['birthday'], "%Y-%m-%d").strftime("%W")
         return res
-    def _seniority(self, cr, uid, ids, field_name, arg, context):
-        employees = self.read(cr, uid, ids, ['date', 'id'])
+
+    def _get_chargefam(self, cr, uid, ids, field_name, arg, context):
+        employees = self.browse(cr, uid, ids)
         res = {}
         for employee in employees:
-            days = datetime.datetime.now() - datetime.datetime.strptime(employee['date'], '%Y-%m-%d')
-            avgyear = 365.2425  # pedants definition of a year length with leap years
-            avgmonth = 365.2425 / 12.0  # even leap years have 12 months
-            years, remainder = divmod(days.days, avgyear)
-            years, months = int(years), int(remainder // avgmonth)
-            m, d = divmod(remainder, avgmonth)
-            seniority = str(years) + ' ans, ' + str(months) + ' mois, ' + str(int(d)) + ' jours.'
-            res[employee['id']] = seniority
+            count = 0
+            for child in employee.children_ids:
+                ages = child.age.split()
+                if len(ages) > 1:
+                    if int(ages[0][:-1]) < 21:
+                        count += 1
+            res[employee.id] = count
         return res
 
-    def _preavis(self, cr, uid, ids, field_name, arg, context):
-        groups = ['Groupe I', 'Groupe II', 'Groupe III', 'Groupe IV', 'Groupe V']
-        employees = self.read(cr, uid, ids, ['category_ids', 'date', 'id'], context)
+    def _get_visibility(self, cr, uid, ids, field_name, args, context=None):
         res = {}
-        grid = {}
-        grid[1] = {'Groupe I':1, 'Groupe II':2, 'Groupe III':3, 'Groupe IV':4, 'Groupe V':5}
-        grid[2] = {'Groupe I':3, 'Groupe II':8, 'Groupe III':15, 'Groupe IV':30, 'Groupe V':30}
-        grid[3] = {'Groupe I':8, 'Groupe II':2, 'Groupe III':3, 'Groupe IV':4, 'Groupe V':5}
-        grid[4] = {'Groupe I':10, 'Groupe II':30, 'Groupe III':45, 'Groupe IV':75, 'Groupe V':120}
-        grid[5] = {'Groupe I':30, 'Groupe II':45, 'Groupe III':60, 'Groupe IV':90, 'Groupe V':180}
-        preavis = 0
-        categ_obj = self.pool.get('hr.employee.category')
-
-        for employee in employees:
-            if employee['date']:
-                days = datetime.datetime.now() - datetime.datetime.strptime(employee['date'], '%Y-%m-%d')
-                days_employed = days.days
-                years = round(days_employed / 365)
-                if employee['category_ids']:
-                    categ_id = employee['category_ids'][0]
+        for emp in self.browse(cr, uid, ids, context=context):
+            visible = False
+            if emp.user_id.id == uid:
+                visible = True
+            elif emp.parent_id.user_id.id == uid:
+                visible = True
+            else:
+                group_ids = self.pool.get('res.users').browse(
+                    cr, uid, uid, context=context).groups_id
+                group_user_id = self.pool.get("ir.model.data").get_object_reference(cr, uid, 'base', 'group_hr_user')[1]
+                if group_user_id in [group.id for group in group_ids]:
+                    visible = True
                 else:
-                    res[employee['id']] = 9999
-                    continue
-                category = categ_obj.browse(cr, uid, categ_id)
-                if category != []:
-                    category = category.parent_id.name
-                else:
-                    category = 'N/A'
-                if category not in groups:
-                    res[employee['id']] = 9999
-                    continue
-                if years >= 5:
-                    preavis = grid[5][category]
-                elif years >= 3:
-                    preavis = grid[4][category] + (years * 2)
-                elif years >= 1:
-                    preavis = grid[4][category]
-                else:
-                    if days_employed < 8:
-                        preavis = grid[1][category]
-                    elif days_employed < 90:
-                        preavis = grid[2][category]
-                    else:
-                        preavis = grid[3][category]
-                res[employee['id']] = preavis
+                    group_user_id = self.pool.get("ir.model.data").get_object_reference(cr, uid, 'base', 'group_hr_manager')[1]
+                    if group_user_id in [group.id for group in group_ids]:
+                        visible = True
+            res[emp.id] = visible
         return res
 
     _columns = {
+        'matricule': fields.char('Matricule', size=64),
+        'cin': fields.char('CIN', size=64),
+        'cin_date': fields.date('Date CIN'),
+        'cin_place': fields.char('Lieu CIN', size=30),
+        'working_hours': fields.many2one('resource.calendar',
+                                         'Working Schedule'),
+        'chargefam': fields.function(_get_chargefam, method=True, type='float'),
+        'visible': fields.function(_get_visibility, method=True,
+                                   string='Visible', type='boolean'),
+        'payment_term_id': fields.one2many('payment.term', 'employee_id',
+                                           'Mode de Paiement'),
+        'anciennete': fields.boolean('Prime anciennete', help='Est ce que cet employe benificie de la prime d\'anciennete'),
+        'affilie': fields.boolean(
+            'Affilie',
+            help='Est ce qu\'on va calculer les cotisations pour cet employe'),
+        'state': fields.selection([('absent', 'Absent'), ('present', 'Present')], 'State'),
+
         'children_ids': fields.one2many('hr.employee.children',
                                         'employee_id', 'Enfants'),
         'mother': fields.char('Mere', size=64),
@@ -84,8 +75,6 @@ class hr_employee(osv.osv):
         'spouse': fields.char('Epoux(se)', size=64),
 
         'weekbirthday':fields.function(_wb, method=True, string='Week Birthday', type='char'),
-        'preavis':fields.function(_preavis, method=True, string='Preavis', type='float'),
-        'seniority':fields.function(_seniority, method=True, string='Anciennete', type='char'),
         'sanction_ids':fields.one2many('hr.employee.sanction', 'name', 'Sanctions'),
         'qualification_ids':fields.one2many('hr.employee.qualification', 'employee_id', 'Qualifications'),
         'medical_ids':fields.one2many('hr.employee.medical.ticket', 'employee_id', 'Billet Medical'),
