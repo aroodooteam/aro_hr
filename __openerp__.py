@@ -3,7 +3,7 @@
 {
     'name': 'ARO HR',
     'version': '0.1',
-    'author': 'aroodoo_asus_hary',
+    'author': 'Rakotomalala Haritiana <haryoran04@gmail.com>',
     'category': 'Tools',
     'complexity': 'normal',
     'data': [
@@ -19,20 +19,22 @@
         'views/medical_type_view.xml',
         'views/hr_employee_medical_ticket_view.xml',
 
-        'views/hr_contract_view.xml',
+        # 'views/hr_contract_view.xml',
+        'views/hr_holidays_view.xml',
         'views/hr_employee_view.xml',
         'views/children_view.xml',
         'views/hr_holidays_status_view.xml',
-        'views/hr_holidays_view.xml',
         'views/hr_holidays_status_type_view.xml',
-        'views/hr_job.xml',
+        'views/hr_job_view.xml',
         'views/hr_holiday_job_view.xml',
         'views/hr_qualification_view.xml',
         'views/hr_employee_formation_view.xml',
         'views/hr_employee_aptitude_view.xml',
     ],
     'depends': [
-        'base', 'hr'
+        'base', 'hr',
+        'hr_holidays',
+        'hr_recruitment',
     ],
     'qweb': [
         # 'static/src/xml/*.xml',
