@@ -12,7 +12,7 @@ class HrEmployeeQualification(models.Model):
     name = fields.Many2one(comodel_name = 'qual.type', string = 'Qualification')
     employee_id = fields.Many2one( comodel_name ='hr.employee', string = 'Salarie')
     branche_id = fields.Many2one(comodel_name = 'hr.employee.branche', string = 'Branche') # #add by Hari
-    specialite = fields.char(string = 'Specialite', size=16) # #add by Hari
+    specialite = fields.Char(string = 'Specialite', size=16) # #add by Hari
     annee = fields.Integer(string = 'Annee') # #add by Hari
     lieu = fields.Char(string= 'Lieu', size=32) # #add by Hari
     institute_id = fields.Many2one('institute', string = 'Institut')
