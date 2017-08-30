@@ -16,9 +16,12 @@ import hr_employee_qualification
 import hr_employee_medical_ticket
 import hr_employee_children
 import hr_holidays_status_type
+import hr_holidays_status
 import hr_replacement
 import hr_holidays
 
+import hr_holiday_job
+import hr_job
 import aptitude_type
 import hr_applicant_aptitude
 import hr_employee_aptitude
@@ -30,3 +33,5 @@ import hr_job_qualification
 import hr_applicant_qualification
 import hr_task_categ
 import hr_employee_task
+import payment_mode
+import payment_term
