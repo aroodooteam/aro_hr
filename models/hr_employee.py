@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
 
-from openerp import models
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models, _
 
-class hr_employee(osv.osv):
+class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
     def _wb(self, cr, uid, ids, field_name, arg, context):
@@ -56,50 +54,34 @@ class hr_employee(osv.osv):
             return {}
         return False
 
-    _columns = {
-        'matricule': fields.char('Matricule', size=64),
-        'cin': fields.char('CIN', size=64),
-        'cin_date': fields.date('Date CIN'),
-        'cin_place': fields.char('Lieu CIN', size=30),
-        'working_hours': fields.many2one('resource.calendar',
-                                         'Working Schedule'),
-        'chargefam': fields.function(_get_chargefam, method=True, type='float'),
-        'visible': fields.function(_get_visibility, method=True,
-                                   string='Visible', type='boolean'),
-        'payment_term_id': fields.one2many('payment.term', 'employee_id',
-                                           'Mode de Paiement'),
-        'anciennete': fields.boolean('Prime anciennete', help='Est ce que cet employe benificie de la prime d\'anciennete'),
-        'affilie': fields.boolean(
-            'Affilie',
-            help='Est ce qu\'on va calculer les cotisations pour cet employe'),
-        'state': fields.selection([('absent', 'Absent'), ('present', 'Present')], 'State'),
-
-        'children_ids': fields.one2many('hr.employee.children',
-                                        'employee_id', 'Enfants'),
-        'mother': fields.char('Mere', size=64),
-        'father': fields.char('Pere', size=64),
-        'spouse': fields.char('Epoux(se)', size=64),
-
-        'weekbirthday':fields.function(_wb, method=True, string='Week Birthday', type='char'),
-        'sanction_ids':fields.one2many('hr.employee.sanction', 'name', 'Sanctions'),
-        'qualification_ids':fields.one2many('hr.employee.qualification', 'employee_id', 'Qualifications'),
-        'medical_ids':fields.one2many('hr.employee.medical.ticket', 'employee_id', 'Billet Medical'),
-        'decoration_ids':fields.one2many('hr.employee.decoration', 'employee_id', 'Decorations'),  # add by Hari
-        'note_ids':fields.one2many('hr.employee.note', 'employee_id', 'Note Employe'),  # add by Hari
-        'lastjob_ids':fields.one2many('hr.employee.last.job', 'employee_id', 'Ancien Emploie'),  # add by Hari
-        'formation_ids':fields.one2many('hr.employee.formation', 'employee_id', 'Formation'),  # add by Hari
-
-        'aptitude_ids':fields.one2many('hr.employee.aptitude', 'employee_id', 'Aptitudes'),
-    }
-    _defaults = {
-        'state': 'absent'
-    }
-
-hr_employee()
+    matricule = fields.Char(string='Matricule',size=64)
+    cin = fields.Char(string='CIN',size=64)
+    cin_date = fields.Date(string='Date CIN')
+    cin_place = fields.Char(string='Lieu CIN',size=30)
+    chargefam = fields.Float(string='xxxxxxx???',compute=_get_chargefam)
+    visible = fields.Boolean(string='Visible',compute=_get_visibility)
+    payment_term_id = fields.One2many(string='Mode de Paiement',comodel_name='payment.term',inverse_name='employee_id')
+    anciennete = fields.Boolean(string='Prime anciennete',help=u'Est ce que cet employe benificie de la prime d\'anciennete')
+    affilie = fields.Boolean(string='Affilie',help=u'Est ce qu\'on va calculer les cotisations pour cet employe')
+    state = fields.Selection(string='State',selection=[('absent', 'Absent'), ('present', 'Present')], default='absent')
+    children_ids = fields.One2many(string='Enfants',comodel_name='hr.employee.children')
+    mother = fields.Char(string='Mere',size=64)
+    father = fields.Char(string='Pere',size=64)
+    spouse = fields.Char(string='Epoux(se)',size=64)
+    weekbirthday = fields.Char(string='Week Birthday', compute=_wb)
+    sanction_ids = fields.One2many(string='Sanctions', comodel_name='hr.employee.sanction', inverse_name='name')
+    qualification_ids = fields.One2many(string='Qualifications', comodel_name='hr.employee.qualification', inverse_name='employee_id')
+    medical_ids = fields.One2many(string='Billet Medical', comodel_name='hr.employee.medical.ticket', inverse_name='employee_id')
+    decoration_ids = fields.One2many(string='Decorations', comodel_name='hr.employee.decoration', inverse_name='employee_id')
+    note_ids = fields.One2many(string='Note Employe', comodel_name='hr.employee.note', inverse_name='employee_id')
+    lastjob_ids = fields.One2many(string='Ancien Emploie', comodel_name='hr.employee.last.job', inverse_name='employee_id')
+    formation_ids = fields.One2many(string='Formation', comodel_name='hr.employee.formation', inverse_name='employee_id')
+    aptitude_ids = fields.One2many(string='Aptitudes', comodel_name='hr.employee.aptitude', inverse_name='employee_id')
 
 
-# class hr_employee(models.Model):
-# 
-#     _inherit = 'hr.employee'
-# 
-#     manager_user_id = fields.Many2one('res.users', related='parent_id.user_id')
+
+
+
+
+
+
