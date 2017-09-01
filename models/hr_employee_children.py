@@ -27,31 +27,49 @@ from mx import DateTime
 #from openerp.osv import fields, osv
 from openerp import api, exceptions, fields, models, _
 
+def compute_age_from_dates(date_birth):
+    now = DateTime.now()
+    if (date_birth):
+        dob = DateTime.strptime(date_birth, '%Y-%m-%d')
+        delta = DateTime.Age(now, dob)
+        deceased = ''
+        years_months_days = str(delta.years) + "a " + str(delta.months)
+        years_months_days += "m " + str(delta.days) + "j" + deceased
+    else:
+        years_months_days = "0"
+    return years_months_days
+
+
 class HrEmployeeChildren(models.Model):
     """(NULL)"""
     _name = 'hr.employee.children'
 
-    def _get_age(self, cr, uid, ids, name, arg, context={}):
-        def compute_age_from_dates(date_birth):
-            now = DateTime.now()
-            if (date_birth):
-                dob = DateTime.strptime(date_birth, '%Y-%m-%d')
-                delta = DateTime.Age(now, dob)
-                deceased = ''
-                years_months_days = str(delta.years) + "a " + str(delta.months)
-                years_months_days += "m " + str(delta.days) + "j" + deceased
-            else:
-                years_months_days = "0"
-            return years_months_days
+    # def _get_age(self, cr, uid, ids, name=None, arg=None, context=None):
+    #     def compute_age_from_dates(date_birth):
+    #         now = DateTime.now()
+    #         if (date_birth):
+    #             dob = DateTime.strptime(date_birth, '%Y-%m-%d')
+    #             delta = DateTime.Age(now, dob)
+    #             deceased = ''
+    #             years_months_days = str(delta.years) + "a " + str(delta.months)
+    #             years_months_days += "m " + str(delta.days) + "j" + deceased
+    #         else:
+    #             years_months_days = "0"
+    #         return years_months_days
 
-        result = {}
-        for patient_data in self.browse(cr, uid, ids, context=context):
-            message = _("Age '%s'") \
-                    % (compute_age_from_dates(patient_data.date_birth),)
-            self.log(cr, uid, patient_data.id, message)
-            dt_brt = patient_data.date_birth
-            result[patient_data.id] = compute_age_from_dates(dt_brt)
-        return result
+    #     result = {}
+    #     for patient_data in self.browse(cr, uid, ids, context=context):
+    #         message = _("Age '%s'") \
+    #                 % (compute_age_from_dates(patient_data.date_birth),)
+    #         self.log(cr, uid, patient_data.id, message)
+    #         dt_brt = patient_data.date_birth
+    #         result[patient_data.id] = compute_age_from_dates(dt_brt)
+    #     return result
+
+    @api.multi
+    def _get_age(self):
+        for child in self:
+            child.age = compute_age_from_dates(child.date_birth)
 
     name = fields.Char(string='Nom',size=64)
     prenom = fields.Char(string='Prenom',size=64)
