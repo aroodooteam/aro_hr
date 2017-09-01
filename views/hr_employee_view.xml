@@ -97,7 +97,6 @@
                                 <field colspan="4" name="motif" />
                                 <field colspan="4" name="type" />
                                 <button name="Imprimer" string="Imprimer" type="action" icon="gtk-print"/>
-
                             </tree>
                             <form string="hr.employee.sanction">
                                 <group>
