@@ -55,25 +55,6 @@ class HrEmployee(models.Model):
     #       res[emp.id] = visible
     #   return res
 
-    @api.multi
-    def _get_visibility2(self):
-        user_obj = self.env['res.users']
-        for emp in self:
-            uid = self._uid
-            visible = False
-            if emp.user_id.id == uid or emp.parent_id.user_id.id == uid:
-                visible = True
-            else:
-                group_ids = user_obj.browse(uid).groups_id
-                group_user_id = self.env.ref('base.group_hr_user')
-                if group_user_id in [group.id for group in group_ids]:
-                    visible = True
-                else:
-                    group_user_id = self.env.ref('base.group_hr_manager')
-                    if group_user_id in [group.id for group in group_ids]:
-                        visible = True
-            emp.visible = visible
-
 
     @api.multi
     def _get_visibility(self):
@@ -85,17 +66,23 @@ class HrEmployee(models.Model):
             group_user_id_user = self.env.ref('base.group_hr_user')
             group_user_id_manager = self.env.ref('base.group_hr_manager')
             if (group_user_id_user in [group.id for group in group_ids]) or (group_user_id_manager in [group.id for group in group_ids]) \
-            or (emp.user_id.id == uid) or (emp.parent_id.user_id.id == uid):
+               or (emp.user_id.id == uid) or (emp.parent_id.user_id.id == uid):
                 visible = True
             emp.visible = visible
 
-    def _wb(self, cr, uid, ids, field_name=None, arg=None, context=None):
-        employees = self.read(cr, uid, ids, ['birthday', 'id'], context)
-        res = {}
-        for employee in employees:
-            if employee['birthday']:
-                res[employee['id']] = datetime.datetime.strptime(employee['birthday'], "%Y-%m-%d").strftime("%W")
-        return res
+    #def _wb2(self, cr, uid, ids, field_name=None, arg=None, context=None):
+    #   employees = self.read(cr, uid, ids, ['birthday', 'id'], context)
+    #   res = {}
+    #   for employee in employees:
+    #       if employee['birthday']:
+    #           res[employee['id']] = datetime.datetime.strptime(employee['birthday'], "%Y-%m-%d").strftime("%W")
+    #   return res
+
+    @api.multi
+    def _wb(self):
+        for emp in self:
+            if emp.birthday:
+                emp.weekbirthday = datetime.datetime.strptime(emp.birthday, "%Y-%m-%d").strftime("%W")
 
     # TODO
     def attendance_action_change(self, cr, uid, ids, context=None):
