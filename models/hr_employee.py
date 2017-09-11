@@ -24,37 +24,11 @@ class HrEmployee(models.Model):
     #         res[employee.id] = count
     #     return res
 
-
-
-
     @api.multi
     def _get_chargefam(self):
         for emp in self:
             ages_list = emp.mapped('children_ids.age')
             emp.chargefam = sum(int(age.split('a')[0]) < 21 for age in ages_list)
-
-    # uid = self._uid
-    #def _get_visibility(self, cr, uid, ids, field_name=None, args=None, context=None):
-    #   res = {}
-    #   for emp in self.browse(cr, uid, ids, context=context):
-    #       visible = False
-    #       if emp.user_id.id == uid:
-    #           visible = True
-    #       elif emp.parent_id.user_id.id == uid:
-    #           visible = True
-    #       else:
-    #           group_ids = self.pool.get('res.users').browse(
-    #               cr, uid, uid, context=context).groups_id
-    #           group_user_id = self.pool.get("ir.model.data").get_object_reference(cr, uid, 'base', 'group_hr_user')[1]
-    #           if group_user_id in [group.id for group in group_ids]:
-    #               visible = True
-    #           else:
-    #               group_user_id = self.pool.get("ir.model.data").get_object_reference(cr, uid, 'base', 'group_hr_manager')[1]
-    #               if group_user_id in [group.id for group in group_ids]:
-    #                   visible = True
-    #       res[emp.id] = visible
-    #   return res
-
 
     @api.multi
     def _get_visibility(self):
@@ -69,14 +43,6 @@ class HrEmployee(models.Model):
                or (emp.user_id.id == uid) or (emp.parent_id.user_id.id == uid):
                 visible = True
             emp.visible = visible
-
-    #def _wb2(self, cr, uid, ids, field_name=None, arg=None, context=None):
-    #   employees = self.read(cr, uid, ids, ['birthday', 'id'], context)
-    #   res = {}
-    #   for employee in employees:
-    #       if employee['birthday']:
-    #           res[employee['id']] = datetime.datetime.strptime(employee['birthday'], "%Y-%m-%d").strftime("%W")
-    #   return res
 
     @api.multi
     def _wb(self):
