@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models, _
 
-
-class hr_task_categ(osv.osv):
+class HrTaskCateg(models.Model):
     _name = 'hr.task.categ'
+    _description = "Category"
 
-    _columns = {
-        'name':fields.char(u'Catégorie')
-    }
-hr_task_categ()
+    name = fields.Char (string = 'Category')
