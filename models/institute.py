@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models, _
 
 
-class institute(osv.osv):
+class Institute(models.Model):
     _name = 'institute'
-    _columns = {
-        'name':fields.char('Institut'),
-    }
-institute()
+    _descritpion = "institute"
+
+    name = fields.Char(string='Institute')
