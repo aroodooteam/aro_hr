@@ -22,11 +22,9 @@
 # from osv import fields
 from openerp import api, exceptions, fields, models
 
-class HrJjobTask(models.Model):
+class HrJobTask(models.Model):
     _name = 'hr.job.task'
 
-    name = fields.char(string='Description')
-    job_id = fields.many2one(comodel_name = 'hr.job', string='Poste')
-    categ_id = fields.many2one(comodel_name = 'hr.task.categ', string='Categorie')
-
-hr_job_task()
+    name = fields.Char(string='Description')
+    job_id = fields.Many2one(comodel_name = 'hr.job', string='Poste')
+    categ_id = fields.Many2one(comodel_name = 'hr.task.categ', string='Categorie')
