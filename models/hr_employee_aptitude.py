@@ -1,18 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models, _
 
-
-class hr_employee_aptitude(osv.osv):
+class HrEmployeeAptitude(models.Model):
 
     _name = "hr.employee.aptitude"
     _description = "Aptitudes d'un employe"
 
-    _columns = {
-        'name':fields.many2one('aptitude.type', 'Aptitude'),
-        'niveau':fields.char('Niveau'),
-        'employee_id':fields.many2one('hr.employee', 'Employe'),
-        'taux':fields.integer('Taux employe'),
-        }
-hr_employee_aptitude()
+    
+    name = fields.Many2one(comodel_name = 'aptitude.type', string = 'Aptitude')
+    niveau = fields.Char( string = 'Niveau')
+    employee_id = fields.Many2one(comodel_name = 'hr.employee', string = 'Employe')
+    taux = fields.Integer(string = 'Taux employe')
+

@@ -1,13 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from openerp.osv import fields, osv
-import datetime
+from openerp import api, exceptions, fields, models, _
 
-
-class qual_type(osv.osv):
+class QualType(models.Model):
     _name = 'qual.type'
-    _columns = {
-        'name':fields.char('Description'),
-        'code':fields.char(u'Code diplôme', size=16),
-    }
-qual_type()
+    
+    name = fields.Char( string = 'Description')
+    code = fields.Char(string = u'Code diplôme', size=16)
