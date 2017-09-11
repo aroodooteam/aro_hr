@@ -27,15 +27,13 @@ class HrEmployeeSanction(models.Model):
     """gestion des sanctions"""
     _name = 'hr.employee.sanction'
     _description = "Employee sanction"
-    
-    motif = fields.char(string='Motif', size=64)
-    date = fields.date(string='Date')
-    date_interview = fields.datetime(string='Date entretien')
-    date_start = fields.date(string='Date debut sanction')
-    date_end = fields.date(string='Date fin sanction')
-    name = fields.many2one(comodel_name = 'hr.employee', string='Salarie')
-    type = fields.many2one(comodel_name = 'sanction.type', string='Type de Sanction')
-    description = fields.text(string='Commentaires')
-    suite = fields.boolean(string='Avec suite')
 
-hr_employee_sanction()
+    motif = fields.Char(string='Motif', size=64)
+    date = fields.Date(string='Date')
+    date_interview = fields.Datetime(string='Date entretien')
+    date_start = fields.Date(string='Date debut sanction')
+    date_end = fields.Date(string='Date fin sanction')
+    name = fields.Many2one(comodel_name = 'hr.employee', string='Salarie')
+    type = fields.Many2one(comodel_name = 'sanction.type', string='Type de Sanction')
+    description = fields.Text(string='Commentaires')
+    suite = fields.Boolean(string='Avec suite')
