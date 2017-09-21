@@ -56,6 +56,19 @@ class HrEmployee(models.Model):
             return {}
         return False
 
+    @api.multi
+    def get_children(self):
+        res={}
+        for emp in self:
+            count=0
+            for child in emp.children_ids:
+                count += 1
+            res[emp.id]=count
+        return res
+
+
+
+
     matricule = fields.Char(string='Matricule', size=64)
     cin = fields.Char(string='CIN', size=64)
     cin_date = fields.Date(string='Date CIN')
@@ -79,3 +92,5 @@ class HrEmployee(models.Model):
     lastjob_ids = fields.One2many(string='Ancien Emploie', comodel_name='hr.employee.last.job', inverse_name='employee_id')
     formation_ids = fields.One2many(string='Formation', comodel_name='hr.employee.formation', inverse_name='employee_id')
     aptitude_ids = fields.One2many(string='Aptitudes', comodel_name='hr.employee.aptitude', inverse_name='employee_id')
+    #contract_ids = fields.One2many(string='Contrats',comodel_name='hr.contract',inverse_name='employee_id')
+    children = fields.Integer(string=u'Nombre d\'enfants',compute='get_children')

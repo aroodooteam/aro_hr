@@ -8,4 +8,4 @@ class HrEmployeeDecorationType(models.Model):
     _name = 'hr.employee.decoration.type'
 
     code = fields.Char(string='Code Decoration',size=16)
-    name = fields.Char(string='Titre Decoration',size=16)
+    name = fields.Char(string='Titre Decoration',size=64)
