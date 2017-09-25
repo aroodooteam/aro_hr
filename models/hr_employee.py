@@ -57,14 +57,12 @@ class HrEmployee(models.Model):
         return False
 
     @api.multi
-    def get_children(self):
-        res={}
+    def _get_children(self):
+        """
+            Get number of all children for an employee
+        """
         for emp in self:
-            count=0
-            for child in emp.children_ids:
-                count += 1
-            res[emp.id]=count
-        return res
+            emp.children = len(emp.children_ids)
 
 
 
@@ -93,4 +91,4 @@ class HrEmployee(models.Model):
     formation_ids = fields.One2many(string='Formation', comodel_name='hr.employee.formation', inverse_name='employee_id')
     aptitude_ids = fields.One2many(string='Aptitudes', comodel_name='hr.employee.aptitude', inverse_name='employee_id')
     #contract_ids = fields.One2many(string='Contrats',comodel_name='hr.contract',inverse_name='employee_id')
-    children = fields.Integer(string=u'Nombre d\'enfants',compute='get_children')
+    children = fields.Integer(string=u'Number of childs',compute='_get_children')
