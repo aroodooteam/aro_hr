@@ -39,7 +39,7 @@ class HrEmployee(models.Model):
             group_ids = user_obj.browse(uid).groups_id
             group_user_id_user = self.env.ref('base.group_hr_user')
             group_user_id_manager = self.env.ref('base.group_hr_manager')
-            if (group_user_id_user in [group.id for group in group_ids]) or (group_user_id_manager in [group.id for group in group_ids]) \
+            if (group_user_id_user.id in [group.id for group in group_ids]) or (group_user_id_manager.id in [group.id for group in group_ids]) \
                or (emp.user_id.id == uid) or (emp.parent_id.user_id.id == uid):
                 visible = True
             emp.visible = visible
