@@ -1,1 +1,9 @@
 id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_medical_ticket_manager,access_cemployee_medical_ticket_manager,model_hr_employee_medical_ticket,base.group_hr_user,1,0,0,0
+access_note_manager,access_note_manager,model_hr_employee_note,base.group_hr_user,1,0,0,0
+access_last_job_manager,access_last_job_manager,model_hr_employee_last_job,base.group_hr_user,1,0,0,0
+access_aptitude_manager,access_aptitude_manager,model_hr_employee_aptitude,base.group_hr_user,1,0,0,0
+access_children_manager,access_children_manager,model_hr_employee_children,base.group_hr_user,1,0,0,0
+access_sanction_manager,access_sanction_manager,model_hr_employee_sanction,base.group_hr_user,1,0,0,0
+access_formation_manager,access_formation_manager,model_hr_employee_formation,base.group_hr_user,1,0,0,0
+access_decoration_manager,access_decoration_manager,model_hr_employee_decoration,base.group_hr_user,1,0,0,0

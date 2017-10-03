@@ -20,7 +20,7 @@
                         <group>
                             <!--separator string="Enfants"/-->
                             <newline/>
-                            <field name="children_ids" nolabel="1"/>
+                            <field name="children_ids" nolabel="1" context="{'default_employee_id': active_id}"/>
                         </group>
                     </group>
                 </group>
@@ -44,6 +44,11 @@
                         <field name="anciennete" string="Ancienneté"/>
                         <field name="affilie"/>
                         <field name="chargefam" string="Charges Familiales"/>
+                    </group>
+                    <group string="Calcul STC">
+                        <field name="date"/>
+                        <!--field name="seniority" string="Ancienneté"/>
+                        <field name="preavis" string="Préavis"/-->
                     </group>
                     <!--<group string="Calcul IR">
                         <field name="logement" string="Logement"/>
