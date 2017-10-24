@@ -64,9 +64,6 @@ class HrEmployee(models.Model):
         for emp in self:
             emp.children = len(emp.children_ids)
 
-
-
-
     matricule = fields.Char(string='Matricule', size=64)
     cin = fields.Char(string='CIN', size=64)
     cin_date = fields.Date(string='Date CIN')

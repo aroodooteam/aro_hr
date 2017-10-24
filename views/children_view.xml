@@ -32,7 +32,7 @@
                     <field name="prenom"/>
                     <field name="date_birth"/>
                     <field name="age"/>
-                    <field name="employee_id"/>
+                    <!--field name="employee_id"/-->
                     <field name="sex"/>
                 </tree>
             </field>
