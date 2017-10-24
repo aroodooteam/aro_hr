@@ -46,7 +46,7 @@
                         <field name="chargefam" string="Charges Familiales"/>
                     </group>
                     <group string="Calcul STC">
-                        <field name="date"/>
+                        <!--<field name="date"/>-->
                         <!--field name="seniority" string="Ancienneté"/>
                         <field name="preavis" string="Préavis"/-->
                     </group>
