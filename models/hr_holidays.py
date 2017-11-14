@@ -22,8 +22,8 @@
 # from osv import fields
 
 import datetime
-from openerp import models, api, fields, tools, _
-from openerp.exceptions import Warning
+from openerp import models, api, fields,exceptions, tools, _
+from openerp.exceptions import Warning, ValidationError
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -52,6 +52,48 @@ class hr_holidays(models.Model):
         string='Remplacement', comodel_name='hr.replacement',
         inverse_name='name')
     manager = fields.Boolean(string='Field label', default=get_if_manager)
+    #manager_id2= fields.Many2one('hr.employee',string='Second Approval', readonly=False)
+
+    
+
+    
+    @api.one
+    def holidays_test_validate(self):
+        if self.employee_id.user_id.id == self.env.user.id:
+            raise Warning(
+                _(u'''Vous n'avez pas l'autorité de valider votre propre demande de congés.\n
+                  Contactez le département des Ressources Humaines.'''))
+        if self.employee_id.parent_id.user_id.id == self.env.user.id:
+            #raise Warning(u'''Vous êtes autorisés lancez-vous''')
+            for hol in self:
+                #if hol.holiday_status_id.id == 10:
+                if hol.holiday_status_id.name == 'A VALOIR SUR CONGE':
+                    #raise Warning(u'''double validation''')
+                    return super(hr_holidays, self).holidays_first_validate()
+                else:
+                    #raise Warning(u'''simple validation''')
+                    return super(hr_holidays, self).holidays_validate()
+        else:
+            raise Warning(
+                _(u'''Allez boire un café vous n'êtes pas le supérieur hiérarchique de cet employé.\n
+                  Contactez le département des Ressources Humaines.'''))
+
+    @api.one
+    def holidays_second_test_validate(self):
+        if self.employee_id.user_id.id == self.env.user.id:
+            raise Warning(
+                _(u'''Vous n'avez pas l'autorité de valider votre propre demande de congés.\n
+                  Contactez le département des Ressources Humaines.'''))
+
+    @api.one
+    def holidays_dap_validate(self):
+        if self.employee_id.user_id.id == self.env.user.id:
+            raise Warning(
+                _(u'''Vous n'avez pas l'autorité de valider votre propre demande de congés.\n
+                  Contactez le département des Ressources Humaines.'''))
+
+
+
 
     @api.one
     def holidays_first_validate(self):
@@ -67,7 +109,7 @@ class hr_holidays(models.Model):
             return super(hr_holidays, self).holidays_first_validate()
         else:
             raise Warning(
-                _(u'''Vous n'avez pas l'autorité de valider ce congé.\n
+                _(u'''Vous avez l'autorité de valider ce congé.\n
                   Contactez le département des Ressources Humaines.'''))
 
     @api.one
@@ -76,7 +118,7 @@ class hr_holidays(models.Model):
             raise Warning(
                 _(u'''Vous n'avez pas l'autorité de valider ce congés.\n
                   Contactez le département des Ressources Humaines.'''))
-        if self.employee_id.parent_id.parent_id.user_id.id == self.env.user.id:
+        if self.employee_id.parent_id.user_id.id == self.env.user.id:
             return super(hr_holidays, self).holidays_first_validate()
         elif self.env.user.has_group('base.group_hr_user'):
             return super(hr_holidays, self).holidays_first_validate()

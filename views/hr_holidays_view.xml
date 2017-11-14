@@ -8,12 +8,21 @@
             <field name="inherit_id" ref="hr_holidays.edit_holiday_new"/>
             <field name="priority">8</field>
             <field name="arch" type="xml">
-                <button name="validate" position="replace">
+                <!--button name="validate" position="replace">
                     <button string="Approve" name="validate" states="confirm" type="workflow" groups="base.group_user" class="oe_highlight"  attrs="{'invisible':[('manager','=',False)]}"/>
+                </button>
+                <button name="validate" position="after">
+                    <button string="Test" name="holidays_test_validate" states="confirm" type="object" groups="base.group_user" class="oe_highlight"  attrs="{'invisible':[('manager','=',False)]}"/>
                 </button>
                 <button name="second_validate" position="replace">
                     <button name="second_validate" string="2eme Validation" states="validate1" type="workflow" groups="base.group_user" class="oe_highlight"  attrs="{'invisible':[('manager','=',False)]}"/>
                 </button>
+                <button name="second_validate" position="after">
+                    <button string="2ieme Test" name="holidays_second_test_validate" states="validate1" type="object" groups="base.group_user" class="oe_highlight"/>
+                </button>
+                <button name="refuse" position="after">
+                    <button string="Validation DAP" name="holidays_dap_validate" states="validate" type="object" groups="base.group_user"/>
+                </button-->
                 <sheet position="replace">
                     <sheet>
                         <group>
@@ -22,6 +31,8 @@
                                 <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}" on_change="onchange_employee(employee_id)"/>
                                 <field name="holiday_status_id" context="{'employee_id':employee_id}"/>
                                 <field name="status_type_id" />
+                                <!--field name="double_validation"/>
+                                <field name="manager_id"/-->
                                 <label for="number_of_days_temp" string="Duration"/>
                                 <div>
                                     <group col="2">
@@ -37,7 +48,7 @@
                                 <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'readonly': [('type', '=', 'remove'),('state','!=','draft'), ('state','!=','confirm')], 'invisible':[('holiday_type','=','employee')]}"/>
                                 <field name="department_id" attrs="{'readonly':['|', ('type','=','add'),('holiday_type','=','category')],'invisible':[('holiday_type','=','category')]}" groups="base.group_hr_user"/>
                                 <field name="replacement"/>
-                                <field name="replacement_ids" colspan="2" nolabel="1">
+                                <field name="replacement_ids" colspan="2" nolabel="1">                                   
                                     <tree string="" create="1" delete="1" edit="1" editable="top">
                                         <field name="employee_id" />
                                         <field name="date_start" />

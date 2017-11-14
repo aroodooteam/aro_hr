@@ -4,6 +4,7 @@
 from openerp import api, exceptions, fields, models, _
 import datetime
 import logging
+import random
 logger = logging.getLogger(__name__)
 
 
@@ -87,5 +88,35 @@ class HrEmployee(models.Model):
     lastjob_ids = fields.One2many(string='Ancien Emploie', comodel_name='hr.employee.last.job', inverse_name='employee_id')
     formation_ids = fields.One2many(string='Formation', comodel_name='hr.employee.formation', inverse_name='employee_id')
     aptitude_ids = fields.One2many(string='Aptitudes', comodel_name='hr.employee.aptitude', inverse_name='employee_id')
-    #contract_ids = fields.One2many(string='Contrats',comodel_name='hr.contract',inverse_name='employee_id')
-    children = fields.Integer(string=u'Number of childs',compute='_get_children')
+    contract_ids = fields.One2many(string='Contrats',comodel_name='hr.contract',inverse_name='employee_id')
+    children = fields.Integer(string=u'Number of children',compute='_get_children')
+    date = fields.Date(string=u'Date d\'embauche', compute='get_date_start')
+    seniority=fields.Char(string=u'Ancienneté',compute='_seniority')
+
+    @api.multi
+    def get_date_start(self):
+        for employee in self:
+            if not employee.contract_ids:
+                employee.date="1900-01-01"
+                continue
+            for contract in employee.contract_ids:
+                employee.date=contract.date_start
+                break
+
+    @api.depends('date')
+    @api.multi
+    def _seniority(self):
+        #employees = self.read(cr, uid, ids, ['date', 'id'])
+        #employees=self.env
+        #res = {}
+        for employee in self:
+            days = datetime.datetime.now() - datetime.datetime.strptime(employee['date'], '%Y-%m-%d')
+            avgyear = 365.2425  # pedants definition of a year length with leap years
+            avgmonth = 365.2425 / 12.0  # even leap years have 12 months
+            years, remainder = divmod(days.days, avgyear)
+            years, months = int(years), int(remainder // avgmonth)
+            m, d = divmod(remainder, avgmonth)
+            seniority = str(years) + ' ans, ' + str(months) + ' mois, ' + str(int(d)) + ' jours.'
+            employee.seniority=seniority
+            #res[employee['id']] = seniority
+        #return res
