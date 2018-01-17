@@ -35,6 +35,7 @@
     'depends': [
         'base', 'hr',
         'hr_holidays',
+        'hr_contract',
         'hr_recruitment',
     ],
     'qweb': [
