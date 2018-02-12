@@ -49,7 +49,7 @@
                     </group>
                     <group string="Calcul STC">
                         <field name="date"/>
-                        <field name="seniority" string="Ancienneté"/>
+                        <!--field name="seniority" string="Ancienneté"/-->
                         <!--field name="preavis" string="Préavis"/-->
                     </group>
                     <!--<group string="Calcul IR">
