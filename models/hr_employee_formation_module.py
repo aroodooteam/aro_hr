@@ -9,4 +9,4 @@ class HrEmployeeFormationModule(models.Model):
     _name = 'hr.employee.formation.module'
 
     code = fields.Char(string='Code',size=16)
-    name = fields.Char(string=u'Libellé',size=64)
+    name = fields.Char(string=u'Module',size=64)
