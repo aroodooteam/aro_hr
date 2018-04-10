@@ -10,3 +10,5 @@ class HrEmployeeFormationModule(models.Model):
 
     code = fields.Char(string='Code',size=16)
     name = fields.Char(string=u'Module',size=64)
+
+    _sql_constraints = [('name_module_uniq', 'unique(name)', _(u'Ce module existe déja!'))]

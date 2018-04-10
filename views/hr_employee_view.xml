@@ -11,7 +11,7 @@
                 <group string="Birth" position="after">
                     <group string="Conjoint(e)">
                         <field name="spouse"/>
-                        <field name="children"/>
+                        <!--field name="children"/-->
                     </group>
                     <group string="Parents">
                         <field name="mother"/>
@@ -19,9 +19,6 @@
                     </group>
                     <group string="Enfants" colspan="4">
                         <group>
-
-                            <!--separator string="Enfants"/-->
-                            <newline/>
                             <field name="children_ids" nolabel="1" context="{'default_employee_id': active_id}"/>
                         </group>
                     </group>
@@ -49,7 +46,7 @@
                     </group>
                     <group string="Calcul STC">
                         <field name="date"/>
-                        <!--field name="seniority" string="Ancienneté"/-->
+                        <field name="seniority" string="Ancienneté"/>
                         <!--field name="preavis" string="Préavis"/-->
                     </group>
                     <!--<group string="Calcul IR">
@@ -232,6 +229,9 @@
                     <!--<field name="contract_type_id"/>-->
                     <field name="matricule"/>
                     <!--<field name="salary_index" groups="hr.group_hr_manager"/>-->
+                </field>
+                <field name="parent_id" position="before">
+                    <field name="category_ids" string="Grade"/>
                 </field>
             </field>
         </record>

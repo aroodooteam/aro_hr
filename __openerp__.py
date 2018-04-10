@@ -9,7 +9,7 @@
     'data': [
         # 'data/templates.xml', # un comment to enable js, css code
         # 'security/security.xml',
-        'security/ir.model.access.csv',
+        #'security/ir.model.access.csv',
         # 'views/view.xml',
         # 'actions/act_window.xml',
         # 'menu.xml',

@@ -57,13 +57,16 @@ class HrEmployee(models.Model):
             return {}
         return False
 
-    @api.multi
+    #@api.multi
+    @api.onchange('children_ids')
     def _get_children(self):
         """
             Get number of all children for an employee
         """
         for emp in self:
             emp.children = len(emp.children_ids)
+            
+
 
     matricule = fields.Char(string='Matricule', size=64)
     cin = fields.Char(string='CIN', size=64)
@@ -89,9 +92,11 @@ class HrEmployee(models.Model):
     formation_ids = fields.One2many(string='Formation', comodel_name='hr.employee.formation', inverse_name='employee_id')
     aptitude_ids = fields.One2many(string='Aptitudes', comodel_name='hr.employee.aptitude', inverse_name='employee_id')
     contract_ids = fields.One2many(string='Contrats',comodel_name='hr.contract',inverse_name='employee_id')
-    children = fields.Integer(string=u'Number of children',compute='_get_children')
+    #children = fields.Integer(string=u'Number of children', compute='_get_children', store=True)
     date = fields.Date(string=u'Date d\'embauche', compute='get_date_start')
     seniority=fields.Char(string=u'Ancienneté',compute='_seniority')
+    #final_seniority = fields.Char(string=u'Ancienneté')
+
 
     @api.multi
     def get_date_start(self):
@@ -110,13 +115,18 @@ class HrEmployee(models.Model):
         #employees=self.env
         #res = {}
         for employee in self:
-            days = datetime.datetime.now() - datetime.datetime.strptime(employee['date'], '%Y-%m-%d')
-            avgyear = 365.2425  # pedants definition of a year length with leap years
-            avgmonth = 365.2425 / 12.0  # even leap years have 12 months
-            years, remainder = divmod(days.days, avgyear)
-            years, months = int(years), int(remainder // avgmonth)
-            m, d = divmod(remainder, avgmonth)
-            seniority = str(years) + ' ans, ' + str(months) + ' mois, ' + str(int(d)) + ' jours.'
-            employee.seniority=seniority
-            #res[employee['id']] = seniority
-        #return res
+            if employee.date:
+                days = datetime.datetime.now() - datetime.datetime.strptime(employee['date'], '%Y-%m-%d')
+                avgyear = 365.2425  # pedants definition of a year length with leap years
+                avgmonth = 365.2425 / 12.0  # even leap years have 12 months
+                years, remainder = divmod(days.days, avgyear)
+                years, months = int(years), int(remainder // avgmonth)
+                m, d = divmod(remainder, avgmonth)
+                seniority = str(years) + ' ans, ' + str(months) + ' mois, ' + str(int(d)) + ' jours.'
+                employee.seniority=seniority
+                #res[employee['id']] = seniority
+                #return res
+            else:
+                employee.final_seniority="0"
+
+

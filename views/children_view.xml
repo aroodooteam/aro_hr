@@ -11,7 +11,7 @@
                     <sheet>
                         <group colspan="4">
                             <field name="name" select="1"/>
-                            <field name="prenom" select="2"/>
+                            <!--field name="prenom" select="2"/-->
                             <field name="date_birth" select="0"/>
                             <field name="age" select="0"/>
                             <field name="employee_id" select="0"/>
@@ -29,7 +29,7 @@
             <field name="arch" type="xml">
                 <tree string="hr.employee.children">
                     <field name="name"/>
-                    <field name="prenom"/>
+                    <!--field name="prenom"/-->
                     <field name="date_birth"/>
                     <field name="age"/>
                     <!--field name="employee_id"/-->
