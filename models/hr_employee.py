@@ -95,7 +95,8 @@ class HrEmployee(models.Model):
     #children = fields.Integer(string=u'Number of children', compute='_get_children', store=True)
     date = fields.Date(string=u'Date d\'embauche', compute='get_date_start')
     seniority=fields.Char(string=u'Ancienneté',compute='_seniority')
-    #final_seniority = fields.Char(string=u'Ancienneté')
+    seniority_for_paye = fields.Char(string='Seniority for paye',compute='_seniority',store=True)
+    #final_seniority = fields.Char(string=u'Ancienneté pour paie',compute='_seniority',store=True)
 
 
     @api.multi
@@ -123,10 +124,17 @@ class HrEmployee(models.Model):
                 years, months = int(years), int(remainder // avgmonth)
                 m, d = divmod(remainder, avgmonth)
                 seniority = str(years) + ' ans, ' + str(months) + ' mois, ' + str(int(d)) + ' jours.'
+                seniority_for_paye=str(years)
                 employee.seniority=seniority
+                employee.seniority_for_paye=seniority_for_paye
                 #res[employee['id']] = seniority
                 #return res
             else:
-                employee.final_seniority="0"
+                employee.seniority="0"
+
+                
+    
+
+
 
 
