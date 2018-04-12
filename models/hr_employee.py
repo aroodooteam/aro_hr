@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 
 
-from openerp import api, exceptions, fields, models, _
+from openerp import api, exceptions, fields, models
 import datetime
 import logging
-import random
 logger = logging.getLogger(__name__)
 
 
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
-
 
     # def _get_chargefam(self, cr, uid, ids, field_name, arg, context):
     #     employees = self.browse(cr, uid, ids)
@@ -65,7 +63,7 @@ class HrEmployee(models.Model):
         """
         for emp in self:
             emp.children = len(emp.children_ids)
-            
+
 
 
     matricule = fields.Char(string='Matricule', size=64)
@@ -92,12 +90,29 @@ class HrEmployee(models.Model):
     formation_ids = fields.One2many(string='Formation', comodel_name='hr.employee.formation', inverse_name='employee_id')
     aptitude_ids = fields.One2many(string='Aptitudes', comodel_name='hr.employee.aptitude', inverse_name='employee_id')
     contract_ids = fields.One2many(string='Contrats',comodel_name='hr.contract',inverse_name='employee_id')
+    contract_id = fields.Many2one(comodel_name='hr.contract', string='Contrats',  compute='get_first_contract')
     #children = fields.Integer(string=u'Number of children', compute='_get_children', store=True)
-    date = fields.Date(string=u'Date d\'embauche', compute='get_date_start')
+    #date = fields.Date(string=u'Date d\'embauche', compute='get_date_start')
+    date = fields.Date(string=u'Date d\'embauche', related='contract_id.date_start')
     seniority=fields.Char(string=u'Ancienneté',compute='_seniority')
     #seniority_for_paye = fields.Integer(string='Seniority for paye',compute='_seniority',store=True)
-    seniority_for_payroll = fields.Integer(string='Seniority for payroll',compute='_seniority',store=True)
+    seniority_for_payroll = fields.Integer(string='Seniority for payroll', compute='compute_seniority', store=True)
     #final_seniority = fields.Char(string=u'Ancienneté pour paie',compute='_seniority',store=True)
+
+    @api.one
+    def get_first_contract(self):
+        ctt_obj = self.env['hr.contract']
+        min_date = min(self.contract_ids.mapped('date_start'))
+        logger.info('\n=== md = %s ===\n' % min_date)
+        dom = [('date_start', '=', min_date),('employee_id', '=', self.id)]
+        ctt_id = ctt_obj.search(dom)
+        self.contract_id = ctt_id.id
+
+    @api.onchange('date')
+    def compute_seniority(self):
+        my_seniority = datetime.datetime.now().year - datetime.datetime.strptime(contract_id.date_start, '%Y-%m-%d').year
+        self.seniority_for_payroll = my_seniority
+        _logger.info('\n=== ms = %s ===\n' % my_seniority)
 
 
     @api.multi
@@ -113,29 +128,23 @@ class HrEmployee(models.Model):
     @api.depends('date')
     @api.multi
     def _seniority(self):
-        #employees = self.read(cr, uid, ids, ['date', 'id'])
-        #employees=self.env
-        #res = {}
         for employee in self:
             if employee.date:
-                days = datetime.datetime.now() - datetime.datetime.strptime(employee['date'], '%Y-%m-%d')
+                #days = datetime.datetime.now() - datetime.datetime.strptime(employee['date'], '%Y-%m-%d')
+                my_seniority = datetime.datetime.now().year - datetime.datetime.strptime(employee.date, '%Y-%m-%d').year
+                logger.info('\n=== s = %s ===\n' % my_seniority)
+                days = datetime.datetime.now() - datetime.datetime.strptime(employee.date, '%Y-%m-%d')
                 avgyear = 365.2425  # pedants definition of a year length with leap years
                 avgmonth = 365.2425 / 12.0  # even leap years have 12 months
                 years, remainder = divmod(days.days, avgyear)
                 years, months = int(years), int(remainder // avgmonth)
                 m, d = divmod(remainder, avgmonth)
                 seniority = str(years) + ' ans, ' + str(months) + ' mois, ' + str(int(d)) + ' jours.'
-                seniority_for_payroll = years
+                #seniority_for_payroll = years
                 employee.seniority=seniority
-                employee.seniority_for_payroll=seniority_for_payroll
+                #employee.seniority_for_payroll=seniority_for_payroll
                 #res[employee['id']] = seniority
                 #return res
             else:
                 employee.seniority="0"
-
-                
-    
-
-
-
-
+                employee.seniority_for_payroll=0
