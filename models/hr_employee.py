@@ -96,8 +96,10 @@ class HrEmployee(models.Model):
     date = fields.Date(string=u'Date d\'embauche', compute='get_date_start')
     seniority=fields.Char(string=u'Ancienneté',compute='_seniority')
     #seniority_for_paye = fields.Integer(string='Seniority for paye',compute='_seniority',store=True)
-    seniority_for_payroll = fields.Integer(string='Seniority for payroll',compute='_seniority',store=True)
-    #final_seniority = fields.Char(string=u'Ancienneté pour paie',compute='_seniority',store=True)
+    #seniority_for_payroll = fields.Integer(string='Seniority for payroll',compute='_seniority',store=True)
+    employee_seniority_for_payroll = fields.Integer(string='Seniority for payroll',compute='employee_seniority',store=True)
+    employee_final_seniority = fields.Char(string=u'Ancienneté',compute='employee_seniority',store=True)
+    hiring_date = fields.Date(string=u'Date d\'embauche',default="1900-01-01")
 
 
     @api.multi
@@ -126,14 +128,28 @@ class HrEmployee(models.Model):
                 m, d = divmod(remainder, avgmonth)
                 seniority = str(years) + ' ans, ' + str(months) + ' mois, ' + str(int(d)) + ' jours.'
                 seniority_for_payroll = years
-                employee.seniority=seniority
+                employee.employee_seniority=seniority
                 employee.seniority_for_payroll=seniority_for_payroll
                 #res[employee['id']] = seniority
                 #return res
             else:
                 employee.seniority="0"
 
-                
+    @api.depends('hiring_date')
+    @api.multi
+    def employee_seniority(self):
+        for employee in self:
+            if employee.hiring_date:
+                days = datetime.datetime.now() - datetime.datetime.strptime(employee['hiring_date'], '%Y-%m-%d')
+                avgyear = 365.2425  # pedants definition of a year length with leap years
+                avgmonth = 365.2425 / 12.0  # even leap years have 12 months
+                years, remainder = divmod(days.days, avgyear)
+                years, months = int(years), int(remainder // avgmonth)
+                m, d = divmod(remainder, avgmonth)
+                employee_seniority = str(years) + ' ans, ' + str(months) + ' mois, ' + str(int(d)) + ' jours.'
+                my_seniority = datetime.datetime.now().year - datetime.datetime.strptime(employee.hiring_date, '%Y-%m-%d').year
+                employee.employee_seniority_for_payroll=my_seniority
+                employee.employee_final_seniority=employee_seniority
     
 
 

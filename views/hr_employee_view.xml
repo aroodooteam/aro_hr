@@ -45,9 +45,11 @@
                         <field name="chargefam" string="Charges Familiales"/>
                     </group>
                     <group string="Calcul STC">
-                        <field name="date"/>
-                        <field name="seniority" string="Ancienneté"/>
-                        <!--field name="seniority_for_paye"/-->
+                        <!--field name="date"/-->
+                        <field name="hiring_date"/>
+                        <!--field name="seniority" string="Ancienneté"/-->
+                        <field name="employee_final_seniority"/>
+                        <field name="employee_seniority_for_payroll"/>
                         <!--field name="preavis" string="Préavis"/-->
                     </group>
                     <!--<group string="Calcul IR">
