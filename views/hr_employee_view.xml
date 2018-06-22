@@ -233,9 +233,9 @@
                     <field name="matricule"/>
                     <!--<field name="salary_index" groups="hr.group_hr_manager"/>-->
                 </field>
-                <field name="parent_id" position="before">
+                <!--field name="parent_id" position="before">
                     <field name="category_ids" string="Grade"/>
-                </field>
+                </field-->
             </field>
         </record>
 
