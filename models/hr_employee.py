@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 
 
@@ -101,6 +102,7 @@ class HrEmployee(models.Model):
     employee_final_seniority = fields.Char(string=u'Ancienneté',compute='employee_seniority',store=True)
     hiring_date = fields.Date(string=u'Date d\'embauche',default="1900-01-01")
 
+    _sql_constraints = [('name_annee_uniq', 'unique(matricule)', _(u'Ce matricule a déja été attribué !'))]
 
     @api.multi
     def get_date_start(self):
